@@ -1,18 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, Response } from '@angular/http';
-import { Router } from '@angular/router';
 
 
-declare var $: any;
+
 @Injectable()
 export class ApiService {
-    host = 'http://localhost:8084/University/webresources/';
+    host = 'http://localhost:8084/University/webresources/test/test';
     token = 'none';
-    constructor(private router: Router, private http: Http) {
-        $.browser.device = (/android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(navigator.userAgent.toLowerCase()));
-        if ($.browser.device) {
-            this.host = 'http://localhost:8084/University/webresources/';
-        }
+    constructor( private http: Http) {
     }
 
     post(url: string, data: any) {

@@ -1,23 +1,36 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { Routes } from '@angular/router';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {FormsModule} from '@angular/forms';
+import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
 import { ApiService } from './app.service';
+import { UniversityService } from './service/university.service';
 import { HomeComponent } from './home/home.component';
-import { Routes } from '@angular/router';
+import { HomepageComponent } from './homepage/homepage.component';
+import { MyPipePipe } from './my-pipe.pipe';
+import { MyDirectiveDirective } from './my-directive.directive';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'home', component: HomeComponent, pathMatch: 'full' }];
+  { path: '', component: HomepageComponent, pathMatch: 'full' }];
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent
+    HomeComponent,
+    HomepageComponent,
+    MyPipePipe,
+    MyDirectiveDirective
   ],
   imports: [
-    BrowserModule
+    HttpModule,
+    BrowserModule,
+    BrowserAnimationsModule,
+    FormsModule
   ],
-  providers: [ApiService],
+  providers: [ApiService, UniversityService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
