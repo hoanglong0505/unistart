@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { University } from '../shared/university.model';
+import { Level } from '../shared/level.model';
 import { UniversityService } from '../service/university.service';
+import { LevelService } from '../service/level.service';
 
 @Component({
   selector: 'app-university',
@@ -9,7 +11,10 @@ import { UniversityService } from '../service/university.service';
 })
 export class UniversityComponent implements OnInit {
   Universitys: University[];
-  constructor(private universityService: UniversityService) { }
+  Levels: Level[];
+
+  constructor(private universityService: UniversityService,
+    private levelService: LevelService) { }
 
   ngOnInit() {
     this.universityService.getList().then((res: University[]) => {
@@ -20,6 +25,16 @@ export class UniversityComponent implements OnInit {
       alert(err);
       // this.loadingService.stop();
   });
+
+  this.levelService.getList().then((res: Level[]) => {
+    this.Levels = res;
+
+     
+}).catch(err => {
+    alert(err);
+    // this.loadingService.stop();
+});
+
   }
 
 }

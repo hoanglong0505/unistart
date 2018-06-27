@@ -29,7 +29,8 @@ public class ApplicationConfig extends Application {
      * If required, comment out calling this method in getClasses().
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
-        resources.add(Restful.CORSFilter.class);
+        resources.add(Restful.LevelResource.class);
+        resources.add(Restful.TypeResource.class);
         resources.add(Restful.UnversityResource.class);
         resources.add(Restful.test.class);
     }
