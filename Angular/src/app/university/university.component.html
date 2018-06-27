@@ -1,3 +1,18 @@
-<p>
-  university works!
-</p>
+<div class="row">
+  <div class="col-md-4" data-plugin-portlet id="portlet-1" *ngFor="let u of Universitys">
+
+<section class="panel panel-tertiary" [ngClass]="{'panel-tertiary': u.levelId == 1, 'panel-secondary': u.levelId == 2 }" id="panel-3" data-portlet-item>
+  <header class="panel-heading portlet-handler">
+    <div class="panel-actions">
+      <a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
+      <a href="#" class="panel-action panel-action-dismiss" data-panel-dismiss></a>
+    </div>
+
+    <h2 class="panel-title">{{u.universityName}}</h2>
+  </header>
+  <div class="panel-body">
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur non imperdiet nisi. Quisque cursus leo et lacus tempus porttitor. Sed egestas laoreet justo non feugiat.
+  </div>
+</section>
+</div>
+</div>
