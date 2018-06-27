@@ -3,15 +3,14 @@
 
 <section class="panel panel-tertiary" [ngClass]="{'panel-tertiary': u.levelId == 1, 
 'panel-secondary': u.levelId == 2,' panel-quartenary' : u.levelId == 3}" id="panel-3" data-portlet-item>
-  <header class="panel-heading portlet-handler">
+  <header class="panel-heading ">
     <div class="panel-actions">
-      <a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
-      <a href="#" class="panel-action panel-action-dismiss" data-panel-dismiss></a>
+
     </div>
     <h2 class="panel-title">{{u.universityName}}</h2>
   </header>
   <div class="panel-body">
-    <img src="\assets\porto\images\invoice-logo.png"/>
+    <img src="{{u.avatar}}"/>
      </div>
 </section>
 </div>

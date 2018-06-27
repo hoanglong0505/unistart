@@ -4,6 +4,7 @@ export class University {
     public  universityName: string;
     public  universityCode: string;
     public  website: string;
+    public  avatar: string;
     public  typeId: number;
     public  levelId: number;
     constructor() {
