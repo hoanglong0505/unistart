@@ -30,6 +30,8 @@ public class ApplicationConfig extends Application {
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
         resources.add(Restful.CORSFilter.class);
+        resources.add(Restful.LevelResource.class);
+        resources.add(Restful.TypeResource.class);
         resources.add(Restful.UnversityResource.class);
         resources.add(Restful.test.class);
     }
