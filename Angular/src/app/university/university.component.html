@@ -1,7 +1,8 @@
 <div class="row">
   <div class="col-md-4" data-plugin-portlet id="portlet-1" *ngFor="let u of Universitys">
 
-<section class="panel panel-tertiary" [ngClass]="{'panel-tertiary': u.levelId == 1, 'panel-secondary': u.levelId == 2 }" id="panel-3" data-portlet-item>
+<section class="panel panel-tertiary" [ngClass]="{'panel-tertiary': u.levelId == 1, 
+'panel-secondary': u.levelId == 2,' panel-quartenary' : u.levelId == 3}" id="panel-3" data-portlet-item>
   <header class="panel-heading portlet-handler">
     <div class="panel-actions">
       <a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
