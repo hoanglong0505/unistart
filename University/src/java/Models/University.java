@@ -5,6 +5,8 @@
  */
 package Models;
 
+import java.util.List;
+
 /**
  *
  * @author Admin
@@ -16,7 +18,7 @@ public class University {
     private String website;
     private int typeId;
     private int levelId;
-
+    private List<Branch>  listBrach;
     public University() {
     }
 
@@ -27,6 +29,24 @@ public class University {
         this.website = website;
         this.typeId = typeId;
         this.levelId = levelId;
+    }
+
+    public University(int universityId, String universityName, String universityCode, String website, int typeId, int levelId, List<Branch> listBrach) {
+        this.universityId = universityId;
+        this.universityName = universityName;
+        this.universityCode = universityCode;
+        this.website = website;
+        this.typeId = typeId;
+        this.levelId = levelId;
+        this.listBrach = listBrach;
+    }
+
+    public List<Branch> getListBrach() {
+        return listBrach;
+    }
+
+    public void setListBrach(List<Branch> listBrach) {
+        this.listBrach = listBrach;
     }
 
     public int getUniversityId() {
