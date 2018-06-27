@@ -5,7 +5,7 @@ import { Http, Headers, Response } from '@angular/http';
 
 @Injectable()
 export class ApiService {
-    host = 'http://localhost:8084/University/webresources/test/test';
+    host = 'http://localhost:8084/University/webresources/';
     token = 'none';
     constructor( private http: Http) {
     }

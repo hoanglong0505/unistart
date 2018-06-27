@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UniversityService } from '../service/university.service';
+import { University } from '../shared/university.model';
 import {trigger, style, transition, animate, keyframes, query, stagger} from '@angular/animations';
 @Component({
   selector: 'app-homepage',
@@ -7,18 +8,21 @@ import {trigger, style, transition, animate, keyframes, query, stagger} from '@a
   styleUrls: ['./homepage.component.css']
 })
 export class HomepageComponent implements OnInit {
-  test: any;
+  test: University[];
+  s: University = new University;
   constructor(private universityService: UniversityService ) { }
 
   ngOnInit() {
-    this.universityService.getList().then((res: any) => {
+    this.universityService.getList().then((res: University[]) => {
       this.test = res;
 
-      // console.log(this.users);
+       console.log(this.test);
   }).catch(err => {
       alert(err);
       // this.loadingService.stop();
   });
    }
-
+select(u: University){
+this.s = u;
+}
 }

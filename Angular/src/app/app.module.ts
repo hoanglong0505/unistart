@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { Routes } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FormsModule} from '@angular/forms';
 import { HttpModule } from '@angular/http';
@@ -12,9 +12,13 @@ import { HomeComponent } from './home/home.component';
 import { HomepageComponent } from './homepage/homepage.component';
 import { MyPipePipe } from './my-pipe.pipe';
 import { MyDirectiveDirective } from './my-directive.directive';
+import { UniversityComponent } from './university/university.component';
 
 const routes: Routes = [
-  { path: '', component: HomepageComponent, pathMatch: 'full' }];
+  { path: '', component: HomepageComponent },
+  { path: 'home', component: HomepageComponent },
+  { path: 'university', component: UniversityComponent }
+];
 
 @NgModule({
   declarations: [
@@ -22,13 +26,15 @@ const routes: Routes = [
     HomeComponent,
     HomepageComponent,
     MyPipePipe,
-    MyDirectiveDirective
+    MyDirectiveDirective,
+    UniversityComponent
   ],
   imports: [
     HttpModule,
     BrowserModule,
     BrowserAnimationsModule,
-    FormsModule
+    FormsModule,
+    RouterModule.forRoot(routes)
   ],
   providers: [ApiService, UniversityService],
   bootstrap: [AppComponent]

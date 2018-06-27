@@ -1,4 +1,7 @@
 <p>
-  homepage works!
-  {{test}}
-</p>
+  homepage works!</p>
+{{s.universityCode}}
+  <div *ngFor="let u of test">
+    <button (click)='select(u)'>{{u.universityName}}</button>
+  </div>
+
