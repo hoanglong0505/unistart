@@ -7,7 +7,6 @@ package DAO;
 
 import DBUtils.DBUtils;
 import Models.Branch;
-import Models.University;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,7 +19,8 @@ import java.util.List;
  * @author Admin
  */
 public class BranchDao {
-     private PreparedStatement stm;
+
+    private PreparedStatement stm;
     private Connection con;
     private ResultSet rs;
 
@@ -39,20 +39,30 @@ public class BranchDao {
             e.printStackTrace();
         }
     }
-    
+
     public List<Branch> getListBranchByUnversity(int universityId) throws SQLException, ClassNotFoundException {
         List<Branch> listBranch = new ArrayList<>();
         try {
             con = DBUtils.makeConnection();
             if (con != null) {
-                String sql = "select b.BranchId,b.Address,b.BranchName,b.LocationId,b.Phone,b.UniversityId,\n" +
-"b.Website,l.LocationName  from Branch b,Location l where b.LocationId=l.LocationId and b.UniversityId="+universityId;
+                String sql = "select b.BranchId,b.Address,b.BranchName,b.LocationId,b.Phone,b.UniversityId,\n"
+                        + "b.Website,l.LocationName  from Branch b,Location l where b.LocationId=l.LocationId and b.UniversityId=" + universityId;
                 //select * from Article order by id desc limit 5;
                 stm = con.prepareStatement(sql);
                 rs = stm.executeQuery();
                 while (rs.next()) {
-                 Branch branch= new Branch();
-                 branch.setBranchId(rs.getInt("BranchId"));
+                    Branch branch = new Branch();
+                    branch.setBranchId(rs.getInt("BranchId"));
+                    branch.setAddress(rs.getString("Address"));
+                    branch.setBranchName(rs.getString("BranchName"));
+                    branch.setLocationId(rs.getInt("LocationId"));
+                    branch.setPhone(rs.getString("Phone"));
+                    branch.setUniversityId(rs.getInt("UniversityId"));
+                    branch.setWebsite(rs.getString("Website"));
+                    branch.setLocationName(rs.getString("LocationName"));
+
+                    listBranch.add(branch);
+
                 }
             }
         } catch (Exception e) {
@@ -60,7 +70,7 @@ public class BranchDao {
         } finally {
             closeConnection();
         }
-        return listUniversity;
+        return listBranch;
     }
 
 }

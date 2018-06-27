@@ -12,40 +12,31 @@ import java.util.List;
  * @author Admin
  */
 public class University {
+
     private int universityId;
     private String universityName;
     private String universityCode;
     private String website;
     private int typeId;
     private int levelId;
-    private List<Branch>  listBrach;
+    private String typeName;
+    private String levelName;
+    private String avatar;
+    private List<Branch> listBrach;
+
     public University() {
     }
 
-    public University(int universityId, String universityName, String universityCode, String website, int typeId, int levelId) {
+    public University(int universityId, String universityName, String universityCode, String website, int typeId, int levelId, String typeName, String levelName, String avatar, List<Branch> listBrach) {
         this.universityId = universityId;
         this.universityName = universityName;
         this.universityCode = universityCode;
         this.website = website;
         this.typeId = typeId;
         this.levelId = levelId;
-    }
-
-    public University(int universityId, String universityName, String universityCode, String website, int typeId, int levelId, List<Branch> listBrach) {
-        this.universityId = universityId;
-        this.universityName = universityName;
-        this.universityCode = universityCode;
-        this.website = website;
-        this.typeId = typeId;
-        this.levelId = levelId;
-        this.listBrach = listBrach;
-    }
-
-    public List<Branch> getListBrach() {
-        return listBrach;
-    }
-
-    public void setListBrach(List<Branch> listBrach) {
+        this.typeName = typeName;
+        this.levelName = levelName;
+        this.avatar = avatar;
         this.listBrach = listBrach;
     }
 
@@ -97,9 +88,41 @@ public class University {
         this.levelId = levelId;
     }
 
+    public String getTypeName() {
+        return typeName;
+    }
+
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
+    }
+
+    public String getLevelName() {
+        return levelName;
+    }
+
+    public void setLevelName(String levelName) {
+        this.levelName = levelName;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public List<Branch> getListBrach() {
+        return listBrach;
+    }
+
+    public void setListBrach(List<Branch> listBrach) {
+        this.listBrach = listBrach;
+    }
+
     @Override
     public String toString() {
         return "University{" + "universityId=" + universityId + ", universityName=" + universityName + ", universityCode=" + universityCode + ", website=" + website + ", typeId=" + typeId + ", levelId=" + levelId + '}';
     }
-    
+
 }

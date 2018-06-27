@@ -19,6 +19,7 @@ import java.util.List;
  * @author Admin
  */
 public class UniversityDao {
+
     private PreparedStatement stm;
     private Connection con;
     private ResultSet rs;
@@ -38,24 +39,30 @@ public class UniversityDao {
             e.printStackTrace();
         }
     }
-     public List<University> getListUniversity() throws SQLException, ClassNotFoundException {
+
+    public List<University> getListUniversity() throws SQLException, ClassNotFoundException {
         List<University> listUniversity = new ArrayList<>();
         try {
             con = DBUtils.makeConnection();
             if (con != null) {
-                String sql = "select u.UniversityId,u.LevelId,u.TypeId,u.UniversityCode,u.UniversityName,u.Website from University u";
+                String sql = "SELECT u.*,t.TypeName,l.LevelName FROM University u "
+                        + "INNER JOIN Type t ON t.TypeId=u.TypeId "
+                        + "INNER JOIN Level l ON l.LevelId=u.LevelId";
                 //select * from Article order by id desc limit 5;
                 stm = con.prepareStatement(sql);
                 rs = stm.executeQuery();
                 while (rs.next()) {
-                    University u= new University();
+                    University u = new University();
                     u.setUniversityId(rs.getInt("UniversityId"));
-                    u.setLevelId(rs.getInt("LevelId"));
-                    u.setTypeId(rs.getInt("TypeId"));
-                    u.setUniversityCode(rs.getString("UniversityCode"));
                     u.setUniversityName(rs.getString("UniversityName"));
+                    u.setUniversityCode(rs.getString("UniversityCode"));
                     u.setWebsite(rs.getString("Website"));
-                    System.out.println(u.toString());
+                    u.setTypeId(rs.getInt("TypeId"));
+                    u.setLevelId(rs.getInt("LevelId"));
+                    u.setAvatar(rs.getString("Avatar"));
+                    u.setTypeName(rs.getString("TypeName"));
+                    u.setLevelName(rs.getString("LevelName"));
+
                     listUniversity.add(u);
                 }
             }
