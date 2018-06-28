@@ -7,6 +7,7 @@ export class University {
     public  avatar: string;
     public  typeId: number;
     public  levelId: number;
+    public  show: boolean;
     constructor() {
 
     }

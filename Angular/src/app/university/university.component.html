@@ -1,21 +1,58 @@
 <div class="row">
-  <div class="col-md-4" data-plugin-portlet id="portlet-1" *ngFor="let u of Universitys">
-
-<section class="panel panel-tertiary" [ngClass]="{'panel-tertiary': u.levelId == 1, 
+  <div *ngFor="let u of Universitys">
+    <div class="col-md-4" data-plugin-portlet id="portlet-1" *ngIf="u.show">
+      <section class="panel panel-tertiary" [ngClass]="{'panel-tertiary': u.levelId == 1, 
 'panel-secondary': u.levelId == 2,' panel-quartenary' : u.levelId == 3}" id="panel-3" data-portlet-item>
-  <header class="panel-heading ">
-    <div class="panel-actions">
-
+        <header class="panel-heading portlet-handler">
+          <div class="panel-actions">
+            <a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
+            <a href="#" class="panel-action panel-action-dismiss" data-panel-dismiss></a>
+          </div>
+          <h2 class="panel-title">{{u.universityName}} </h2>
+        </header>
+        <div class="panel-body">
+          <img src="\assets\porto\images\invoice-logo.png" />
+        </div>
+      </section>
     </div>
-    <h2 class="panel-title">{{u.universityName}}</h2>
-  </header>
-  <div class="panel-body">
-    <img src="{{u.avatar}}"/>
-     </div>
-</section>
-</div>
+  </div>
+  <div id="filter-bar">
+    <div class="field">
+      <div class="title">KHU VỰC</div>
+      <ul class="lv1">
+        <li class="lv2">
+          <input type="checkbox" name="all" value="all" checked />
+          <span>Tất cả</span>
+        </li>
+        <li class="lv2">
+          <input type="checkbox" name="north" value="north" />
+          <span>Miền Bắc</span>
+        </li>
+        <li class="lv2">
+          <input type="checkbox" name="south" value="south" />
+          <span>Miền Nam</span>
+        </li>
+      </ul>
+    </div>
 
-  <div *ngFor="let l of Levels">
-    <div>{{l.levelName}}</div>
+    <div class="field">
+      <div class="title">CẤP BẬC</div>
+      <ul class="lv1">
+        <li class="lv2">
+          <input type="checkbox" name="all" value="all" 
+            [(ngModel)]="FilterLv.get(-1).status" (change)="filterLevel(true)" />
+          <span>Tất cả</span>
+        </li>
+
+        <div *ngFor="let l of Levels">
+          <li class="lv2" *ngIf="l.levelId!=-1">
+            <input type="checkbox" name="{{l.levelName}}" value="{{l.levelId}}" 
+            [(ngModel)]="l.status" (change)="filterLevel(false)" />
+            <span>{{l.levelName}}</span>
+          </li>
+        </div>
+
+      </ul>
+    </div>
   </div>
 </div>
