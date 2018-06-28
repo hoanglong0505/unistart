@@ -1,7 +1,28 @@
-<p>
-  homepage works!</p>
-{{s.universityCode}}
-  <div *ngFor="let u of test">
-    <button (click)='select(u)'>{{u.universityName}}</button>
+
+
+  
+<div class="row">
+    <div class="col-md-2">
+        <div *ngFor="let s of listSub" class="vertical-menu">
+            <li class="active"><a href="" >{{s.subLocationName}}</a></li>
+            <li *ngFor="let l of s.listLocation">
+            <a href=""> <input type="checkbox" [checked]="l.check" (click)="check()"/> {{l.locationName}}</a>
+          </li>
+          </div>
+    </div>  
+    <div class="col-md-3" data-plugin-portlet id="portlet-1" *ngFor="let u of Universitys">
+  
+  <section class="panel panel-tertiary" [ngClass]="{'panel-tertiary': u.levelId == 1, 
+  'panel-secondary': u.levelId == 2,' panel-quartenary' : u.levelId == 3}" id="panel-3" data-portlet-item>
+    <header class="panel-heading ">
+      <div class="panel-actions">
+      </div>
+      <h2 class="panel-title">{{u.universityName}}</h2>
+    </header>
+    <div class="panel-body">
+      <img src="{{u.avatar}}"/>
+       </div>
+  </section>
+  </div>
   </div>
 

@@ -1,0 +1,30 @@
+img{
+    vertical-align: middle;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    height: auto;
+}
+.vertical-menu {
+    width: 200px;
+    height: 100%;
+    overflow-y: auto;
+    background-color: aquamarine
+}
+
+.vertical-menu li {
+    background-color:cornflowerblue;
+    color: black;
+    display: block;
+    padding: 12px;
+    text-decoration: none;
+}
+
+.vertical-menu a:hover {
+    background-color: #ccc;
+}
+
+.vertical-menu li.active {
+    background-color: aquamarine;
+    color: white;
+}

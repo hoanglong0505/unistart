@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 import { ApiService } from './app.service';
 import { UniversityService } from './service/university.service';
 import { LevelService } from './service/level.service';
+import { SubLocationService } from './service/subLocation.service';
 import { HomeComponent } from './home/home.component';
 import { HomepageComponent } from './homepage/homepage.component';
 import { MyPipePipe } from './my-pipe.pipe';
@@ -37,7 +38,7 @@ const routes: Routes = [
     FormsModule,
     RouterModule.forRoot(routes)
   ],
-  providers: [ApiService, UniversityService , LevelService],
+  providers: [ApiService, UniversityService , LevelService, SubLocationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

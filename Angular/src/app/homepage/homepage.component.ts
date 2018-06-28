@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { UniversityService } from '../service/university.service';
+import { SubLocationService } from '../service/subLocation.service';
 import { University } from '../shared/university.model';
+import { SubLocation } from '../shared/subLocation';
+
 import {trigger, style, transition, animate, keyframes, query, stagger} from '@angular/animations';
 @Component({
   selector: 'app-homepage',
@@ -8,21 +11,33 @@ import {trigger, style, transition, animate, keyframes, query, stagger} from '@a
   styleUrls: ['./homepage.component.css']
 })
 export class HomepageComponent implements OnInit {
-  test: University[];
-  s: University = new University;
-  constructor(private universityService: UniversityService ) { }
+  Universitys: University[];
+  listSub: SubLocation[];
+  listSubCk: SubLocation[];
+  constructor(private universityService: UniversityService,
+    private subLocationService: SubLocationService ) { }
 
-  ngOnInit() {
-    this.universityService.getList().then((res: University[]) => {
-      this.test = res;
+    ngOnInit() {
+      this.universityService.getList().then((res: University[]) => {
+        this.Universitys = res;
 
-       console.log(this.test);
+         console.log(this.Universitys);
+    }).catch(err => {
+        alert(err);
+        // this.loadingService.stop();
+    });
+    this.subLocationService.getList().then((res: SubLocation[]) => {
+      this.listSub = res;
+
+       console.log(this.listSub);
   }).catch(err => {
       alert(err);
       // this.loadingService.stop();
   });
    }
-select(u: University){
-this.s = u;
+
+check( id : number) {
+
+  console.log(this.listSub);
 }
 }

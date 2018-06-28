@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Restful;
+package Three;
 
 import java.util.Set;
 import javax.ws.rs.core.Application;
@@ -29,12 +29,7 @@ public class ApplicationConfig extends Application {
      * If required, comment out calling this method in getClasses().
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
-        resources.add(Restful.CORSFilter.class);
-        resources.add(Restful.LevelResource.class);
-        resources.add(Restful.SubLocationResource.class);
-        resources.add(Restful.TypeResource.class);
-        resources.add(Restful.UnversityResource.class);
-        resources.add(Restful.test.class);
+        resources.add(Three.TestResource.class);
     }
     
 }
