@@ -27,7 +27,9 @@ public class University {
     public University() {
     }
 
-    public University(int universityId, String universityName, String universityCode, String website, int typeId, int levelId, String typeName, String levelName, String avatar, List<Branch> listBrach) {
+    public University(int universityId, String universityName, String universityCode, 
+            String website, int typeId, int levelId, String typeName, 
+            String levelName, String avatar, List<Branch> listBrach) {
         this.universityId = universityId;
         this.universityName = universityName;
         this.universityCode = universityCode;
@@ -39,7 +41,7 @@ public class University {
         this.avatar = avatar;
         this.listBrach = listBrach;
     }
-
+    
     public int getUniversityId() {
         return universityId;
     }

@@ -5,19 +5,24 @@
  */
 package Models;
 
+import java.util.List;
+
 /**
  *
  * @author Admin
  */
 public class Branch {
-   private  int branchId;
-   private  String  branchName;
-   private  int  universityId; 
-   private  int  locationId;
-   private  String  locationName;
-   private  String  address;
-   private  String  phone;
-   private  String  website;
+
+    private int branchId;
+    private String branchName;
+    private int universityId;
+    private int locationId;
+    private String locationName;
+    private String address;
+    private String phone;
+    private String website;
+    private List<Location> listLocation;
+    
 
     public Branch() {
     }
@@ -42,7 +47,7 @@ public class Branch {
         this.phone = phone;
         this.website = website;
     }
-
+    
     public String getLocationName() {
         return locationName;
     }
@@ -106,6 +111,5 @@ public class Branch {
     public void setWebsite(String website) {
         this.website = website;
     }
-   
-   
+
 }
