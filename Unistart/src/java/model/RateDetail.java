@@ -15,7 +15,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+import model.utils.TransientHandler;
 
 /**
  *
@@ -29,7 +32,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "RateDetail.findByRateId", query = "SELECT r FROM RateDetail r WHERE r.rateDetailPK.rateId = :rateId")
     , @NamedQuery(name = "RateDetail.findByCriteriaId", query = "SELECT r FROM RateDetail r WHERE r.rateDetailPK.criteriaId = :criteriaId")
     , @NamedQuery(name = "RateDetail.findByValue", query = "SELECT r FROM RateDetail r WHERE r.value = :value")})
-public class RateDetail implements Serializable {
+public class RateDetail implements Serializable, TransientHandler {
 
     private static final long serialVersionUID = 1L;
     @EmbeddedId
@@ -37,12 +40,6 @@ public class RateDetail implements Serializable {
     @Basic(optional = false)
     @Column(name = "Value")
     private int value;
-    @JoinColumn(name = "RateId", referencedColumnName = "RateId", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
-    private Rate rate;
-    @JoinColumn(name = "CriteriaId", referencedColumnName = "CriteriaId", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
-    private RateCriteria rateCriteria;
 
     public RateDetail() {
     }
@@ -76,22 +73,6 @@ public class RateDetail implements Serializable {
         this.value = value;
     }
 
-    public Rate getRate() {
-        return rate;
-    }
-
-    public void setRate(Rate rate) {
-        this.rate = rate;
-    }
-
-    public RateCriteria getRateCriteria() {
-        return rateCriteria;
-    }
-
-    public void setRateCriteria(RateCriteria rateCriteria) {
-        this.rateCriteria = rateCriteria;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -116,5 +97,48 @@ public class RateDetail implements Serializable {
     public String toString() {
         return "model.RateDetail[ rateDetailPK=" + rateDetailPK + " ]";
     }
-    
+
+    //=============RELATIONSHIP HANDLER====================
+    //HANDLE RATE
+    @JoinColumn(name = "RateId", referencedColumnName = "RateId", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private Rate rate;
+
+    @Transient
+    @XmlTransient
+    public int rateHandler = GENERATE;
+
+    public Rate getRate() {
+        if (rateHandler == GENERATE) {
+            rate.rateDetailHandler = TRANSIENT;
+            return rate;
+        }
+        return null;
+    }
+
+    public void setRate(Rate rate) {
+        this.rate = rate;
+    }
+
+    //HANDLE RATE CRITERIA
+    @JoinColumn(name = "CriteriaId", referencedColumnName = "CriteriaId", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private RateCriteria rateCriteria;
+
+    @Transient
+    @XmlTransient
+    public int rateCriteriaHandler = GENERATE;
+
+    public RateCriteria getRateCriteria() {
+        if (rateCriteriaHandler == GENERATE) {
+            rateCriteria.rateDetailHandler = TRANSIENT;
+            return rateCriteria;
+        }
+        return null;
+    }
+
+    public void setRateCriteria(RateCriteria rateCriteria) {
+        this.rateCriteria = rateCriteria;
+    }
+
 }

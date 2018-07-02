@@ -16,8 +16,11 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import static model.utils.TransientHandler.GENERATE;
+import static model.utils.TransientHandler.TRANSIENT;
 
 /**
  *
@@ -40,8 +43,6 @@ public class Type implements Serializable {
     @Basic(optional = false)
     @Column(name = "TypeName")
     private String typeName;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "typeId")
-    private Collection<University> universityCollection;
 
     public Type() {
     }
@@ -71,15 +72,6 @@ public class Type implements Serializable {
         this.typeName = typeName;
     }
 
-    @XmlTransient
-    public Collection<University> getUniversityCollection() {
-        return universityCollection;
-    }
-
-    public void setUniversityCollection(Collection<University> universityCollection) {
-        this.universityCollection = universityCollection;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -103,6 +95,28 @@ public class Type implements Serializable {
     @Override
     public String toString() {
         return "model.Type[ typeId=" + typeId + " ]";
+    }
+    
+    //=============RELATIONSHIP HANDLER====================
+    //HANDLE UNIVERSITIES
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "type")
+    private Collection<University> universities;
+    @Transient
+    @XmlTransient
+    public int universityHandler = GENERATE;
+
+    public Collection<University> getUniversities() {
+        if (universityHandler == GENERATE) {
+            for (University u : universities) {
+                u.typeHandler = TRANSIENT;
+            }
+            return universities;
+        }
+        return null;
+    }
+
+    public void setUniversities(Collection<University> universities) {
+        this.universities = universities;
     }
     
 }

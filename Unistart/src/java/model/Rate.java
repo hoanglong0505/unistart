@@ -19,8 +19,10 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import model.utils.TransientHandler;
 
 /**
  *
@@ -36,7 +38,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Rate.findByEncourage", query = "SELECT r FROM Rate r WHERE r.encourage = :encourage")
     , @NamedQuery(name = "Rate.findByStatus", query = "SELECT r FROM Rate r WHERE r.status = :status")
     , @NamedQuery(name = "Rate.findByAnonymous", query = "SELECT r FROM Rate r WHERE r.anonymous = :anonymous")})
-public class Rate implements Serializable {
+public class Rate implements Serializable, TransientHandler {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -63,14 +65,6 @@ public class Rate implements Serializable {
     @Basic(optional = false)
     @Column(name = "Anonymous")
     private boolean anonymous;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "rate")
-    private Collection<RateDetail> rateDetailCollection;
-    @JoinColumn(name = "UniversityId", referencedColumnName = "UniversityId")
-    @ManyToOne(optional = false)
-    private University universityId;
-    @JoinColumn(name = "UserId", referencedColumnName = "UserId")
-    @ManyToOne
-    private Users userId;
 
     public Rate() {
     }
@@ -150,31 +144,6 @@ public class Rate implements Serializable {
         this.anonymous = anonymous;
     }
 
-    @XmlTransient
-    public Collection<RateDetail> getRateDetailCollection() {
-        return rateDetailCollection;
-    }
-
-    public void setRateDetailCollection(Collection<RateDetail> rateDetailCollection) {
-        this.rateDetailCollection = rateDetailCollection;
-    }
-
-    public University getUniversityId() {
-        return universityId;
-    }
-
-    public void setUniversityId(University universityId) {
-        this.universityId = universityId;
-    }
-
-    public Users getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Users userId) {
-        this.userId = userId;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -199,5 +168,66 @@ public class Rate implements Serializable {
     public String toString() {
         return "model.Rate[ rateId=" + rateId + " ]";
     }
-    
+
+    //======================================
+    //HANDLE UNIVERSITY
+    @JoinColumn(name = "UniversityId", referencedColumnName = "UniversityId")
+    @ManyToOne(optional = false)
+    private University university;
+    @Transient
+    @XmlTransient
+    public int universityHandler = GENERATE;
+
+    public University getUniversity() {
+        if (universityHandler == GENERATE) {
+            university.rateHandler = TRANSIENT;
+            return university;
+        }
+        return null;
+    }
+
+    public void setUniversity(University university) {
+        this.university = university;
+    }
+
+    //HANDLE RATE DETAILS
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "rate")
+    private Collection<RateDetail> rateDetails;
+    @Transient
+    @XmlTransient
+    public int rateDetailHandler = GENERATE;
+
+    public Collection<RateDetail> getRateDetails() {
+        if (rateDetailHandler == GENERATE) {
+            for (RateDetail rd : rateDetails) {
+                rd.rateHandler = TRANSIENT;
+            }
+            return rateDetails;
+        }
+        return null;
+    }
+
+    public void setRateDetails(Collection<RateDetail> rateDetails) {
+        this.rateDetails = rateDetails;
+    }
+
+    //HANDLE USER
+    @JoinColumn(name = "UserId", referencedColumnName = "UserId")
+    @ManyToOne
+    private Users user;
+    @Transient
+    @XmlTransient
+    public int userHandler = GENERATE;
+
+    public Users getUser() {
+        if (userHandler == GENERATE) {
+            user.rateHandler = TRANSIENT;
+            return user;
+        }
+        return null;
+    }
+
+    public void setUser(Users user) {
+        this.user = user;
+    }
 }

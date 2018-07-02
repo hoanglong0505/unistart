@@ -15,7 +15,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+import static model.utils.TransientHandler.GENERATE;
+import static model.utils.TransientHandler.TRANSIENT;
 
 /**
  *
@@ -41,9 +45,7 @@ public class Introduce implements Serializable {
     @Basic(optional = false)
     @Column(name = "Status")
     private boolean status;
-    @JoinColumn(name = "UniversityId", referencedColumnName = "UniversityId")
-    @ManyToOne(optional = false)
-    private University universityId;
+    
 
     public Introduce() {
     }
@@ -81,14 +83,6 @@ public class Introduce implements Serializable {
         this.status = status;
     }
 
-    public University getUniversityId() {
-        return universityId;
-    }
-
-    public void setUniversityId(University universityId) {
-        this.universityId = universityId;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -112,6 +106,29 @@ public class Introduce implements Serializable {
     @Override
     public String toString() {
         return "model.Introduce[ introduceId=" + introduceId + " ]";
+    }
+    
+    //============RELATIONSHIP HANDLER==============
+    
+    //HANDLE UNIVERSITY
+    @JoinColumn(name = "UniversityId", referencedColumnName = "UniversityId")
+    @ManyToOne(optional = false)
+    private University university;
+    @Transient
+    @XmlTransient
+    public int universityHandler = GENERATE;
+
+    public University getUniversity() {
+        if (universityHandler == GENERATE) {
+            university.typeHandler = TRANSIENT;
+            return university;
+        }
+        return null;
+    }
+
+   
+    public void setUniversity(University university) {
+        this.university = university;
     }
     
 }

@@ -15,8 +15,11 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import static model.utils.TransientHandler.GENERATE;
+import static model.utils.TransientHandler.TRANSIENT;
 
 /**
  *
@@ -46,8 +49,7 @@ public class Users implements Serializable {
     private String name;
     @Column(name = "Avatar")
     private String avatar;
-    @OneToMany(mappedBy = "userId")
-    private Collection<Rate> rateCollection;
+    
 
     public Users() {
     }
@@ -94,15 +96,6 @@ public class Users implements Serializable {
         this.avatar = avatar;
     }
 
-    @XmlTransient
-    public Collection<Rate> getRateCollection() {
-        return rateCollection;
-    }
-
-    public void setRateCollection(Collection<Rate> rateCollection) {
-        this.rateCollection = rateCollection;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -126,6 +119,29 @@ public class Users implements Serializable {
     @Override
     public String toString() {
         return "model.Users[ userId=" + userId + " ]";
+    }
+    
+    
+    //============RELATIONSHIP HANDLE===================
+    @OneToMany(mappedBy = "user")
+    private Collection<Rate> rates;
+    
+    @Transient
+    @XmlTransient
+    public int rateHandler = GENERATE;
+
+    public Collection<Rate> getRates() {
+        if (rateHandler == GENERATE) {
+            for (Rate r : rates) {
+                r.userHandler = TRANSIENT;
+            }
+            return rates;
+        }
+        return null;
+    }
+
+    public void setRates(Collection<Rate> rates) {
+        this.rates = rates;
     }
     
 }

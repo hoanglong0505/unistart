@@ -15,7 +15,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+import static model.utils.TransientHandler.GENERATE;
+import static model.utils.TransientHandler.RAW;
+import static model.utils.TransientHandler.TRANSIENT;
 
 /**
  *
@@ -48,12 +54,6 @@ public class Branch implements Serializable {
     private String phone;
     @Column(name = "Website")
     private String website;
-    @JoinColumn(name = "LocationId", referencedColumnName = "LocationId")
-    @ManyToOne(optional = false)
-    private Location locationId;
-    @JoinColumn(name = "UniversityId", referencedColumnName = "UniversityId")
-    @ManyToOne(optional = false)
-    private University universityId;
 
     public Branch() {
     }
@@ -108,22 +108,6 @@ public class Branch implements Serializable {
         this.website = website;
     }
 
-    public Location getLocationId() {
-        return locationId;
-    }
-
-    public void setLocationId(Location locationId) {
-        this.locationId = locationId;
-    }
-
-    public University getUniversityId() {
-        return universityId;
-    }
-
-    public void setUniversityId(University universityId) {
-        this.universityId = universityId;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -148,5 +132,46 @@ public class Branch implements Serializable {
     public String toString() {
         return "model.Branch[ branchId=" + branchId + " ]";
     }
-    
+
+    //=============RELATIONSHIP HANDLER==============
+    //HANDLE UNIVERSITY
+    @JoinColumn(name = "UniversityId", referencedColumnName = "UniversityId")
+    @ManyToOne(optional = false)
+    private University university;
+    @Transient
+    @XmlTransient
+    public int universityHandler = GENERATE;
+
+    public University getUniversity() {
+        if (universityHandler == GENERATE) {
+            university.branchHandler = TRANSIENT;
+            return university;
+        }
+        return null;
+    }
+
+    public void setUniversity(University university) {
+        this.university = university;
+    }
+
+    //HANDLE LOCATION
+    @JoinColumn(name = "LocationId", referencedColumnName = "LocationId")
+    @ManyToOne(optional = false)
+    private Location location;
+    @Transient
+    @XmlTransient
+    public int locationHandler = GENERATE;
+
+    public Location getLocation() {
+        if (locationHandler == GENERATE) {
+            location.branchHandler = TRANSIENT;
+            return location;
+        }
+        return null;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+
 }

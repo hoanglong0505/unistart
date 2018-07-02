@@ -18,8 +18,15 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import model.utils.TransientHandler;
+import static model.utils.TransientHandler.GENERATE;
+import static model.utils.TransientHandler.RAW;
+import static model.utils.TransientHandler.TRANSIENT;
+import restful.LevelFacadeREST;
+import restful.TypeFacadeREST;
 
 /**
  *
@@ -35,7 +42,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "University.findByUniversityCode", query = "SELECT u FROM University u WHERE u.universityCode = :universityCode")
     , @NamedQuery(name = "University.findByWebsite", query = "SELECT u FROM University u WHERE u.website = :website")
     , @NamedQuery(name = "University.findByAvatar", query = "SELECT u FROM University u WHERE u.avatar = :avatar")})
-public class University implements Serializable {
+public class University implements Serializable, TransientHandler {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -52,18 +59,6 @@ public class University implements Serializable {
     private String website;
     @Column(name = "Avatar")
     private String avatar;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "universityId")
-    private Collection<Introduce> introduceCollection;
-    @JoinColumn(name = "LevelId", referencedColumnName = "LevelId")
-    @ManyToOne(optional = false)
-    private Level levelId;
-    @JoinColumn(name = "TypeId", referencedColumnName = "TypeId")
-    @ManyToOne(optional = false)
-    private Type typeId;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "universityId")
-    private Collection<Branch> branchCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "universityId")
-    private Collection<Rate> rateCollection;
 
     public University() {
     }
@@ -118,49 +113,6 @@ public class University implements Serializable {
         this.avatar = avatar;
     }
 
-    @XmlTransient
-    public Collection<Introduce> getIntroduceCollection() {
-        return introduceCollection;
-    }
-
-    public void setIntroduceCollection(Collection<Introduce> introduceCollection) {
-        this.introduceCollection = introduceCollection;
-    }
-
-    public Level getLevelId() {
-        return levelId;
-    }
-
-    public void setLevelId(Level levelId) {
-        this.levelId = levelId;
-    }
-
-    public Type getTypeId() {
-        return typeId;
-    }
-
-    public void setTypeId(Type typeId) {
-        this.typeId = typeId;
-    }
-
-    @XmlTransient
-    public Collection<Branch> getBranchCollection() {
-        return branchCollection;
-    }
-
-    public void setBranchCollection(Collection<Branch> branchCollection) {
-        this.branchCollection = branchCollection;
-    }
-
-    @XmlTransient
-    public Collection<Rate> getRateCollection() {
-        return rateCollection;
-    }
-
-    public void setRateCollection(Collection<Rate> rateCollection) {
-        this.rateCollection = rateCollection;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -185,7 +137,110 @@ public class University implements Serializable {
     public String toString() {
         return "model.University[ universityId=" + universityId + " ]";
     }
-    
-    //=======TRANSIENT HANDLER=========
-    
+
+    //=======RELATIONSHIP HANDLER=========
+    //HANDLE INTRODUCES
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "university")
+    private Collection<Introduce> introduces;
+    @Transient
+    @XmlTransient
+    public int introduceHandler = GENERATE;
+
+    public Collection<Introduce> getIntroduces() {
+        if (introduceHandler == GENERATE) {
+            for (Introduce i : introduces) {
+                i.universityHandler = TRANSIENT;
+            }
+            return introduces;
+        }
+        return null;
+    }
+
+    public void setIntroduces(Collection<Introduce> introduces) {
+        this.introduces = introduces;
+    }
+
+    //HANDLE TYPE
+    @JoinColumn(name = "TypeId", referencedColumnName = "TypeId")
+    @ManyToOne(optional = false)
+    private Type type;
+    @Transient
+    @XmlTransient
+    public int typeHandler = GENERATE;
+
+    public Type getType() {
+        if (typeHandler == GENERATE) {
+            type.universityHandler = TRANSIENT;
+            return type;
+        }
+        return null;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
+
+    //HANDLE BRANCHS
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "university")
+    private Collection<Branch> branchs;
+    @Transient
+    @XmlTransient
+    public int branchHandler = GENERATE;
+
+    public Collection<Branch> getBranchs() {
+        if (branchHandler == GENERATE) {
+            for (Branch b : branchs) {
+                b.universityHandler = TRANSIENT;
+            }
+            return branchs;
+        }
+        return null;
+    }
+
+    public void setBranchs(Collection<Branch> branchs) {
+        this.branchs = branchs;
+    }
+
+    //Handle Level
+    @JoinColumn(name = "LevelId", referencedColumnName = "LevelId")
+    @ManyToOne(optional = false)
+    private Level level;
+    @Transient
+    @XmlTransient
+    public int levelHandler = GENERATE;
+
+    public Level getLevel() {
+        if (levelHandler == GENERATE) {
+            level.universityHandler = TRANSIENT;
+            return level;
+        }
+        return null;
+    }
+
+    public void setLevel(Level level) {
+        this.level = level;
+    }
+
+    //Handle Rate
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "university")
+    private Collection<Rate> rates;
+
+    @Transient
+    @XmlTransient
+    public int rateHandler = GENERATE;
+
+    public Collection<Rate> getRates() {
+        if (rateHandler == GENERATE) {
+            for (Rate r : rates) {
+                r.universityHandler = TRANSIENT;
+            }
+            return rates;
+        }
+        return null;
+    }
+
+    public void setRates(Collection<Rate> rates) {
+        this.rates = rates;
+    }
+
 }

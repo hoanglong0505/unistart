@@ -16,8 +16,10 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import model.utils.TransientHandler;
 
 /**
  *
@@ -30,7 +32,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Level.findAll", query = "SELECT l FROM Level l")
     , @NamedQuery(name = "Level.findByLevelId", query = "SELECT l FROM Level l WHERE l.levelId = :levelId")
     , @NamedQuery(name = "Level.findByLevelName", query = "SELECT l FROM Level l WHERE l.levelName = :levelName")})
-public class Level implements Serializable {
+public class Level implements Serializable, TransientHandler {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -40,8 +42,6 @@ public class Level implements Serializable {
     @Basic(optional = false)
     @Column(name = "LevelName")
     private String levelName;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "levelId")
-    private Collection<University> universityCollection;
 
     public Level() {
     }
@@ -71,15 +71,6 @@ public class Level implements Serializable {
         this.levelName = levelName;
     }
 
-    @XmlTransient
-    public Collection<University> getUniversityCollection() {
-        return universityCollection;
-    }
-
-    public void setUniversityCollection(Collection<University> universityCollection) {
-        this.universityCollection = universityCollection;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -103,6 +94,28 @@ public class Level implements Serializable {
     @Override
     public String toString() {
         return "model.Level[ levelId=" + levelId + " ]";
+    }
+    
+    //=====================
+    //Handle Level
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "level")
+    private Collection<University> universities;
+    @Transient
+    @XmlTransient
+    public int universityHandler = GENERATE;
+
+    public Collection<University> getUniversities() {
+        if (universityHandler == GENERATE) {
+            for (University u : universities) {
+                u.levelHandler = TRANSIENT;
+            }
+            return universities;
+        }
+        return null;
+    }
+
+    public void setUniversities(Collection<University> universities) {
+        this.universities = universities;
     }
     
 }

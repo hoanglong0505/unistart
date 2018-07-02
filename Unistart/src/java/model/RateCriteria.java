@@ -16,8 +16,10 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import model.utils.TransientHandler;
 
 /**
  *
@@ -31,7 +33,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "RateCriteria.findByCriteriaId", query = "SELECT r FROM RateCriteria r WHERE r.criteriaId = :criteriaId")
     , @NamedQuery(name = "RateCriteria.findByCriteriaName", query = "SELECT r FROM RateCriteria r WHERE r.criteriaName = :criteriaName")
     , @NamedQuery(name = "RateCriteria.findByStatus", query = "SELECT r FROM RateCriteria r WHERE r.status = :status")})
-public class RateCriteria implements Serializable {
+public class RateCriteria implements Serializable, TransientHandler {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -45,7 +47,7 @@ public class RateCriteria implements Serializable {
     @Column(name = "Status")
     private boolean status;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "rateCriteria")
-    private Collection<RateDetail> rateDetailCollection;
+    private Collection<RateDetail> rateDetails;
 
     public RateCriteria() {
     }
@@ -84,15 +86,6 @@ public class RateCriteria implements Serializable {
         this.status = status;
     }
 
-    @XmlTransient
-    public Collection<RateDetail> getRateDetailCollection() {
-        return rateDetailCollection;
-    }
-
-    public void setRateDetailCollection(Collection<RateDetail> rateDetailCollection) {
-        this.rateDetailCollection = rateDetailCollection;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -117,5 +110,25 @@ public class RateCriteria implements Serializable {
     public String toString() {
         return "model.RateCriteria[ criteriaId=" + criteriaId + " ]";
     }
-    
+
+    //=============RELATIONSHIP HANDLER=================
+    //HANDLE RATE DETAILS
+    @Transient
+    @XmlTransient
+    public int rateDetailHandler = GENERATE;
+
+    public Collection<RateDetail> getRateDetails() {
+        if (rateDetailHandler == GENERATE) {
+            for (RateDetail rd : rateDetails) {
+                rd.rateCriteriaHandler = TRANSIENT;
+            }
+            return rateDetails;
+        }
+        return null;
+    }
+
+    public void setRateDetails(Collection<RateDetail> rateDetails) {
+        this.rateDetails = rateDetails;
+    }
+
 }

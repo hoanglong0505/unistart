@@ -16,8 +16,10 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import model.utils.TransientHandler;
 
 /**
  *
@@ -30,7 +32,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "SubLocation.findAll", query = "SELECT s FROM SubLocation s")
     , @NamedQuery(name = "SubLocation.findBySubLocationId", query = "SELECT s FROM SubLocation s WHERE s.subLocationId = :subLocationId")
     , @NamedQuery(name = "SubLocation.findBySubLocationName", query = "SELECT s FROM SubLocation s WHERE s.subLocationName = :subLocationName")})
-public class SubLocation implements Serializable {
+public class SubLocation implements Serializable, TransientHandler {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -40,8 +42,6 @@ public class SubLocation implements Serializable {
     @Basic(optional = false)
     @Column(name = "SubLocationName")
     private String subLocationName;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "subLocationId")
-    private Collection<Location> locationCollection;
 
     public SubLocation() {
     }
@@ -71,15 +71,6 @@ public class SubLocation implements Serializable {
         this.subLocationName = subLocationName;
     }
 
-    @XmlTransient
-    public Collection<Location> getLocationCollection() {
-        return locationCollection;
-    }
-
-    public void setLocationCollection(Collection<Location> locationCollection) {
-        this.locationCollection = locationCollection;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -104,5 +95,28 @@ public class SubLocation implements Serializable {
     public String toString() {
         return "model.SubLocation[ subLocationId=" + subLocationId + " ]";
     }
-    
+
+    //=======RELATIONSHIP HANDLER===================
+    //HANDLE LOCATION
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "subLocation")
+    private Collection<Location> locations;
+
+    @Transient
+    @XmlTransient
+    public int locationHandler = GENERATE;
+
+    public Collection<Location> getLocations() {
+        if (locationHandler == GENERATE) {
+            for (Location l : locations) {
+                l.subLocationHandler = TRANSIENT;
+            }
+            return locations;
+        }
+        return null;
+    }
+
+    public void setLocations(Collection<Location> locations) {
+        this.locations = locations;
+    }
+
 }
