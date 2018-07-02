@@ -134,6 +134,7 @@ public class Branch implements Serializable {
     }
 
     //=============RELATIONSHIP HANDLER==============
+   
     //HANDLE UNIVERSITY
     @JoinColumn(name = "UniversityId", referencedColumnName = "UniversityId")
     @ManyToOne(optional = false)
@@ -152,6 +153,19 @@ public class Branch implements Serializable {
 
     public void setUniversity(University university) {
         this.university = university;
+    }
+     // Handle UniversotyID
+  @Column(name = "UniversityId", updatable = false, insertable = false)
+    private Integer universityId;
+    public Integer getUniversityId() {
+        if ( universityHandler!= RAW) {
+            universityId = null;
+        }
+        return universityId;
+    }
+
+    public void setUniversityId(Integer universityId) {
+        this.universityId = universityId;
     }
 
     //HANDLE LOCATION
@@ -174,4 +188,17 @@ public class Branch implements Serializable {
         this.location = location;
     }
 
+    // Handle LocationID
+  @Column(name = "LocationId", updatable = false, insertable = false)
+    private Integer locationId;
+    public Integer getLocationId() {
+        if ( locationHandler!= RAW) {
+            locationId = null;
+        }
+        return locationId;
+    }
+
+    public void setLocationId(Integer locationId) {
+        this.locationId = locationId;
+    }
 }

@@ -19,6 +19,7 @@ import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import static model.utils.TransientHandler.GENERATE;
+import static model.utils.TransientHandler.RAW;
 import static model.utils.TransientHandler.TRANSIENT;
 
 /**
@@ -129,6 +130,19 @@ public class Introduce implements Serializable {
    
     public void setUniversity(University university) {
         this.university = university;
+    }
+     // Handle UniversityId
+  @Column(name = "UniversityId", updatable = false, insertable = false)
+    private Integer universityId;
+    public Integer getUniversityId() {
+        if ( universityHandler!= RAW) {
+            universityId = null;
+        }
+        return universityId;
+    }
+
+    public void setUniversityId(Integer universityId) {
+        this.universityId = this.universityId;
     }
     
 }

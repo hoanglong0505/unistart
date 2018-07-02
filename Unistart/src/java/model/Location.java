@@ -141,5 +141,18 @@ public class Location implements Serializable, TransientHandler {
     public void setSubLocation(SubLocation subLocation) {
         this.subLocation = subLocation;
     }
+    // Handle UniversityId
+  @Column(name = "SubLocationId", updatable = false, insertable = false)
+    private Integer subLocationId;
+    public Integer getSubLocationId() {
+        if ( subLocationHandler!= RAW) {
+            subLocationId = null;
+        }
+        return subLocationId;
+    }
+
+    public void setSubLocationId(Integer subLocationId) {
+        this.subLocationId = this.subLocationId;
+    }
 
 }

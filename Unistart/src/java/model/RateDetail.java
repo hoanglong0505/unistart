@@ -119,6 +119,19 @@ public class RateDetail implements Serializable, TransientHandler {
     public void setRate(Rate rate) {
         this.rate = rate;
     }
+    // Handle RateId
+  @Column(name = "RateId", updatable = false, insertable = false)
+    private Integer rateId;
+    public Integer setRateId() {
+        if ( rateCriteriaHandler!= RAW) {
+            rateId = null;
+        }
+        return rateId;
+    }
+
+    public void setRateId(Integer rateId) {
+        this.rateId = this.rateId;
+    }
 
     //HANDLE RATE CRITERIA
     @JoinColumn(name = "CriteriaId", referencedColumnName = "CriteriaId", insertable = false, updatable = false)
@@ -139,6 +152,19 @@ public class RateDetail implements Serializable, TransientHandler {
 
     public void setRateCriteria(RateCriteria rateCriteria) {
         this.rateCriteria = rateCriteria;
+    }
+    // Handle RateCreatedId
+  @Column(name = "CriteriaId", updatable = false, insertable = false)
+    private Integer criteriaId;
+    public Integer setRateCriteriaId() {
+        if ( rateCriteriaHandler!= RAW) {
+            criteriaId = null;
+        }
+        return criteriaId;
+    }
+
+    public void setRateCriteriaId(Integer criteriaId) {
+        this.criteriaId = this.criteriaId;
     }
 
 }

@@ -179,6 +179,19 @@ public class University implements Serializable, TransientHandler {
     public void setType(Type type) {
         this.type = type;
     }
+    // Handle TypeId
+  @Column(name = "TypeId", updatable = false, insertable = false)
+    private Integer typeId;
+    public Integer getTypeId() {
+        if ( typeHandler!= RAW) {
+            typeId = null;
+        }
+        return typeId;
+    }
+
+    public void setTypeId(Integer typeId) {
+        this.typeId = this.typeId;
+    }
 
     //HANDLE BRANCHS
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "university")
@@ -219,6 +232,19 @@ public class University implements Serializable, TransientHandler {
 
     public void setLevel(Level level) {
         this.level = level;
+    }
+    // Handle LevelId
+  @Column(name = "LevelId", updatable = false, insertable = false)
+    private Integer levelId;
+    public Integer getLevelId() {
+        if ( levelHandler!= RAW) {
+            levelId = null;
+        }
+        return levelId;
+    }
+
+    public void setLevelId(Integer levelId) {
+        this.levelId = this.levelId;
     }
 
     //Handle Rate

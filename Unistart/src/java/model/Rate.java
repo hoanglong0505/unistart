@@ -189,6 +189,19 @@ public class Rate implements Serializable, TransientHandler {
     public void setUniversity(University university) {
         this.university = university;
     }
+    // Handle UniversityId
+  @Column(name = "UniversityId", updatable = false, insertable = false)
+    private Integer universityId;
+    public Integer getUniversityId() {
+        if ( universityHandler!= RAW) {
+            universityId = null;
+        }
+        return universityId;
+    }
+
+    public void setUniversityId(Integer universityId) {
+        this.universityId = this.universityId;
+    }
 
     //HANDLE RATE DETAILS
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "rate")
@@ -210,6 +223,7 @@ public class Rate implements Serializable, TransientHandler {
     public void setRateDetails(Collection<RateDetail> rateDetails) {
         this.rateDetails = rateDetails;
     }
+    
 
     //HANDLE USER
     @JoinColumn(name = "UserId", referencedColumnName = "UserId")
@@ -229,5 +243,18 @@ public class Rate implements Serializable, TransientHandler {
 
     public void setUser(Users user) {
         this.user = user;
+    }
+    // Handle UniversityId
+  @Column(name = "UserId", updatable = false, insertable = false)
+    private Integer userId;
+    public Integer getUserId() {
+        if ( userHandler!= RAW) {
+            userId = null;
+        }
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = this.userId;
     }
 }
