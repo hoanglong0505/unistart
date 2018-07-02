@@ -103,4 +103,13 @@ export class UniversityComponent implements OnInit {
     //----------- END FILTER LEVEL FUNCTION------------
   }
 
+  select(){
+    this.Levels.forEach(l => {
+    this.Universitys.forEach(u => {
+    if (u.levelId === l.levelId) {
+      u.show = l.status;
+    }
+    });
+  });
+  }
 }

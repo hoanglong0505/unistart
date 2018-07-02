@@ -5,6 +5,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FormsModule} from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
+
+
 import { AppComponent } from './app.component';
 import { ApiService } from './app.service';
 import { UniversityService } from './service/university.service';
@@ -16,11 +18,14 @@ import { MyPipePipe } from './my-pipe.pipe';
 import { MyDirectiveDirective } from './my-directive.directive';
 import { UniversityComponent } from './university/university.component';
 
+
 const routes: Routes = [
   { path: '', component: HomepageComponent },
   { path: 'home', component: HomepageComponent },
   { path: 'university', component: UniversityComponent }
 ];
+
+
 
 @NgModule({
   declarations: [
@@ -38,7 +43,8 @@ const routes: Routes = [
     FormsModule,
     RouterModule.forRoot(routes)
   ],
-  providers: [ApiService, UniversityService , LevelService, SubLocationService],
+  providers: [ApiService, UniversityService
+    , LevelService, SubLocationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

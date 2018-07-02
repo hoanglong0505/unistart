@@ -36,8 +36,9 @@ export class HomepageComponent implements OnInit {
   });
    }
 
-check( id : number) {
-
+check() {
+ this.Universitys.forEach(u => {
+});
   console.log(this.listSub);
 }
 }

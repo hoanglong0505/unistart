@@ -57,9 +57,7 @@ public String SetText(String one) throws IOException {
     System.out.println(one);
     ObjectMapper mapper = new ObjectMapper();
     One o = mapper.readValue(one, One.class);
-      JpaJsonConverter converter=new JpaJsonConverter();
- 
-   
+      JpaJsonConverter converter=new JpaJsonConverter(); 
         String s=converter.convertToDatabaseColumn(o);
     
        return s;
