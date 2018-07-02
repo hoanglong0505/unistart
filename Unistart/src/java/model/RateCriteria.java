@@ -43,9 +43,9 @@ public class RateCriteria implements Serializable {
     private String criteriaName;
     @Basic(optional = false)
     @Column(name = "Status")
-    private short status;
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "rateCriteria")
-//    private Collection<RateDetail> rates;
+    private boolean status;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "rateCriteria")
+    private Collection<RateDetail> rateDetailCollection;
 
     public RateCriteria() {
     }
@@ -54,7 +54,7 @@ public class RateCriteria implements Serializable {
         this.criteriaId = criteriaId;
     }
 
-    public RateCriteria(Integer criteriaId, String criteriaName, short status) {
+    public RateCriteria(Integer criteriaId, String criteriaName, boolean status) {
         this.criteriaId = criteriaId;
         this.criteriaName = criteriaName;
         this.status = status;
@@ -76,22 +76,22 @@ public class RateCriteria implements Serializable {
         this.criteriaName = criteriaName;
     }
 
-    public short getStatus() {
+    public boolean getStatus() {
         return status;
     }
 
-    public void setStatus(short status) {
+    public void setStatus(boolean status) {
         this.status = status;
     }
 
-//    @XmlTransient
-//    public Collection<RateDetail> getRates() {
-//        return rates;
-//    }
-//
-//    public void setRates(Collection<RateDetail> rates) {
-//        this.rates = rates;
-//    }
+    @XmlTransient
+    public Collection<RateDetail> getRateDetailCollection() {
+        return rateDetailCollection;
+    }
+
+    public void setRateDetailCollection(Collection<RateDetail> rateDetailCollection) {
+        this.rateDetailCollection = rateDetailCollection;
+    }
 
     @Override
     public int hashCode() {

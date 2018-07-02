@@ -5,7 +5,6 @@
  */
 package model;
 
-import model.utils.TransientHandler;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
@@ -19,11 +18,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-import static model.utils.TransientHandler.GENERATE;
 
 /**
  *
@@ -36,7 +32,7 @@ import static model.utils.TransientHandler.GENERATE;
     @NamedQuery(name = "Location.findAll", query = "SELECT l FROM Location l")
     , @NamedQuery(name = "Location.findByLocationId", query = "SELECT l FROM Location l WHERE l.locationId = :locationId")
     , @NamedQuery(name = "Location.findByLocationName", query = "SELECT l FROM Location l WHERE l.locationName = :locationName")})
-public class Location implements Serializable, TransientHandler {
+public class Location implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -46,11 +42,11 @@ public class Location implements Serializable, TransientHandler {
     @Basic(optional = false)
     @Column(name = "LocationName")
     private String locationName;
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "location")
-//    private Collection<Branch> branchs;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "locationId")
+    private Collection<Branch> branchCollection;
     @JoinColumn(name = "SubLocationId", referencedColumnName = "SubLocationId")
     @ManyToOne(optional = false)
-    private SubLocation subLocation;
+    private SubLocation subLocationId;
 
     public Location() {
     }
@@ -80,14 +76,22 @@ public class Location implements Serializable, TransientHandler {
         this.locationName = locationName;
     }
 
-//    @XmlTransient
-//    public Collection<Branch> getBranchs() {
-//        return branchs;
-//    }
-//
-//    public void setBranchs(Collection<Branch> branchs) {
-//        this.branchs = branchs;
-//    }
+    @XmlTransient
+    public Collection<Branch> getBranchCollection() {
+        return branchCollection;
+    }
+
+    public void setBranchCollection(Collection<Branch> branchCollection) {
+        this.branchCollection = branchCollection;
+    }
+
+    public SubLocation getSubLocationId() {
+        return subLocationId;
+    }
+
+    public void setSubLocationId(SubLocation subLocationId) {
+        this.subLocationId = subLocationId;
+    }
 
     @Override
     public int hashCode() {
@@ -113,33 +117,5 @@ public class Location implements Serializable, TransientHandler {
     public String toString() {
         return "model.Location[ locationId=" + locationId + " ]";
     }
-
-    //==========TRANSIENT HANDLER========
-    //-------------HANDLE SUBLOCATION----------------
-    @Transient
-    private Integer subLocationId;
-    @Transient
-    @XmlTransient
-    public int subLocationHandler = GENERATE;
-
-    public SubLocation getSubLocation() {
-        if (subLocationHandler == GENERATE) {
-            subLocation.locationHandler = TRANSIENT;
-            return subLocation;
-        }
-        return null;
-    }
-
-    @XmlElement(name = "subLocationId")
-    public Integer getSubLocationId() {
-        if (subLocationHandler == RAW) {
-            subLocationId = subLocation.getSubLocationId();
-        }
-        return subLocationId;
-    }
-
-    public void setSubLocation(SubLocation subLocation) {
-        this.subLocation = subLocation;
-    }
-
+    
 }

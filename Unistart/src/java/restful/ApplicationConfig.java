@@ -29,8 +29,8 @@ public class ApplicationConfig extends Application {
      * If required, comment out calling this method in getClasses().
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
-        resources.add(controller.filter.CORSFilter.class);
         resources.add(restful.BranchFacadeREST.class);
+        resources.add(restful.IntroduceFacadeREST.class);
         resources.add(restful.LevelFacadeREST.class);
         resources.add(restful.LocationFacadeREST.class);
         resources.add(restful.RateCriteriaFacadeREST.class);
@@ -39,6 +39,7 @@ public class ApplicationConfig extends Application {
         resources.add(restful.SubLocationFacadeREST.class);
         resources.add(restful.TypeFacadeREST.class);
         resources.add(restful.UniversityFacadeREST.class);
+        resources.add(restful.UsersFacadeREST.class);
     }
     
 }

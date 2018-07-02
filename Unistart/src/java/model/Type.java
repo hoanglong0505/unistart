@@ -5,7 +5,6 @@
  */
 package model;
 
-import model.utils.TransientHandler;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
@@ -17,7 +16,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -32,7 +30,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Type.findAll", query = "SELECT t FROM Type t")
     , @NamedQuery(name = "Type.findByTypeId", query = "SELECT t FROM Type t WHERE t.typeId = :typeId")
     , @NamedQuery(name = "Type.findByTypeName", query = "SELECT t FROM Type t WHERE t.typeName = :typeName")})
-public class Type implements Serializable, TransientHandler {
+public class Type implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -42,8 +40,8 @@ public class Type implements Serializable, TransientHandler {
     @Basic(optional = false)
     @Column(name = "TypeName")
     private String typeName;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "type")
-    private Collection<University> universities;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "typeId")
+    private Collection<University> universityCollection;
 
     public Type() {
     }
@@ -73,6 +71,15 @@ public class Type implements Serializable, TransientHandler {
         this.typeName = typeName;
     }
 
+    @XmlTransient
+    public Collection<University> getUniversityCollection() {
+        return universityCollection;
+    }
+
+    public void setUniversityCollection(Collection<University> universityCollection) {
+        this.universityCollection = universityCollection;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -97,24 +104,5 @@ public class Type implements Serializable, TransientHandler {
     public String toString() {
         return "model.Type[ typeId=" + typeId + " ]";
     }
-
-    //=================TRANSIENT HANDLER===============
-    //HANDLE UNIVERSITIES
-    @Transient
-    @XmlTransient
-    public int universityHandler = GENERATE;
-
-    public Collection<University> getUniversities() {
-        if (universityHandler == GENERATE) {
-            for (University u : universities) {
-                u.typeHandler = TRANSIENT;
-            }
-            return universities;
-        }
-        return null;
-    }
-
-    public void setUniversities(Collection<University> universities) {
-        this.universities = universities;
-    }
+    
 }

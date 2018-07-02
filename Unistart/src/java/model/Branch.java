@@ -5,11 +5,8 @@
  */
 package model;
 
-import model.utils.TransientHandler;
 import java.io.Serializable;
-import java.util.Collection;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -17,12 +14,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -38,10 +31,9 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Branch.findByAddress", query = "SELECT b FROM Branch b WHERE b.address = :address")
     , @NamedQuery(name = "Branch.findByPhone", query = "SELECT b FROM Branch b WHERE b.phone = :phone")
     , @NamedQuery(name = "Branch.findByWebsite", query = "SELECT b FROM Branch b WHERE b.website = :website")})
-public class Branch implements Serializable, TransientHandler {
+public class Branch implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
     @Id
     @Basic(optional = false)
     @Column(name = "BranchId")
@@ -58,12 +50,10 @@ public class Branch implements Serializable, TransientHandler {
     private String website;
     @JoinColumn(name = "LocationId", referencedColumnName = "LocationId")
     @ManyToOne(optional = false)
-    private Location location;
+    private Location locationId;
     @JoinColumn(name = "UniversityId", referencedColumnName = "UniversityId")
     @ManyToOne(optional = false)
-    private University university;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "branch")
-    private Collection<Rate> rates;
+    private University universityId;
 
     public Branch() {
     }
@@ -118,6 +108,22 @@ public class Branch implements Serializable, TransientHandler {
         this.website = website;
     }
 
+    public Location getLocationId() {
+        return locationId;
+    }
+
+    public void setLocationId(Location locationId) {
+        this.locationId = locationId;
+    }
+
+    public University getUniversityId() {
+        return universityId;
+    }
+
+    public void setUniversityId(University universityId) {
+        this.universityId = universityId;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -142,74 +148,5 @@ public class Branch implements Serializable, TransientHandler {
     public String toString() {
         return "model.Branch[ branchId=" + branchId + " ]";
     }
-
-    //TRANSIENT HANDLER
-    //-------------HANDLE LOCATION----------------
-    @Transient
-    private Integer locationId;
-    @Transient @XmlTransient
-    public int locationHandler = GENERATE;
-
-    public Location getLocation() {
-        if (locationHandler == GENERATE) {
-            return location;
-        }
-        return null;
-    }
-
-    @XmlElement(name = "locationId")
-    public Integer getLocationId() {
-        if (locationHandler == RAW) {
-            locationId = location.getLocationId();
-        }
-        return locationId;
-    }
-
-    public void setLocation(Location location) {
-        this.location = location;
-    }
-
-    //-------------HANDLE UNIVERSITY----------------
-    @Transient
-    private Integer universityId;
-    @Transient @XmlTransient
-    public int universityHandler = GENERATE;
-
-    public University getUniversity() {
-        if (universityHandler == GENERATE) {
-            university.branchHandler = TRANSIENT;
-            return university;
-        }
-        return null;
-    }
-
-    @XmlElement(name = "universityId")
-    public Integer getUniversityId() {
-        if (universityHandler == RAW) {
-            universityId = university.getUniversityId();
-        }
-        return universityId;
-    }
-
-    public void setUniversity(University university) {
-        this.university = university;
-    }
     
-    //HANDLE RATES
-    @Transient @XmlTransient
-    public int rateHandler = GENERATE;
-
-    public Collection<Rate> getRates() {
-        if (rateHandler == GENERATE) {
-            for (Rate r : rates) {
-                r.branchHandler = TRANSIENT;
-            }
-            return rates;
-        }
-        return null;
-    }
-
-    public void setRates(Collection<Rate> rates) {
-        this.rates = rates;
-    }
 }

@@ -5,7 +5,6 @@
  */
 package model;
 
-import model.utils.TransientHandler;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -16,11 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.persistence.Transient;
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
-import static model.utils.TransientHandler.GENERATE;
 
 /**
  *
@@ -34,7 +29,7 @@ import static model.utils.TransientHandler.GENERATE;
     , @NamedQuery(name = "RateDetail.findByRateId", query = "SELECT r FROM RateDetail r WHERE r.rateDetailPK.rateId = :rateId")
     , @NamedQuery(name = "RateDetail.findByCriteriaId", query = "SELECT r FROM RateDetail r WHERE r.rateDetailPK.criteriaId = :criteriaId")
     , @NamedQuery(name = "RateDetail.findByValue", query = "SELECT r FROM RateDetail r WHERE r.value = :value")})
-public class RateDetail implements Serializable, TransientHandler {
+public class RateDetail implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @EmbeddedId
@@ -121,7 +116,5 @@ public class RateDetail implements Serializable, TransientHandler {
     public String toString() {
         return "model.RateDetail[ rateDetailPK=" + rateDetailPK + " ]";
     }
-    
-    //=============TRANSIENT HANDLER============
     
 }

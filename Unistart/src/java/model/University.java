@@ -5,15 +5,12 @@
  */
 package model;
 
-import model.utils.TransientHandler;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -21,13 +18,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-import static model.utils.TransientHandler.GENERATE;
-import restful.LevelFacadeREST;
-import restful.TypeFacadeREST;
 
 /**
  *
@@ -43,13 +35,12 @@ import restful.TypeFacadeREST;
     , @NamedQuery(name = "University.findByUniversityCode", query = "SELECT u FROM University u WHERE u.universityCode = :universityCode")
     , @NamedQuery(name = "University.findByWebsite", query = "SELECT u FROM University u WHERE u.website = :website")
     , @NamedQuery(name = "University.findByAvatar", query = "SELECT u FROM University u WHERE u.avatar = :avatar")})
-public class University implements Serializable, TransientHandler {
+public class University implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @Column(name = "UniversityId")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer universityId;
     @Basic(optional = false)
     @Column(name = "UniversityName")
@@ -57,33 +48,34 @@ public class University implements Serializable, TransientHandler {
     @Basic(optional = false)
     @Column(name = "UniversityCode")
     private String universityCode;
-    @Basic(optional = false)
     @Column(name = "Website")
     private String website;
     @Column(name = "Avatar")
     private String avatar;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "universityId")
+    private Collection<Introduce> introduceCollection;
     @JoinColumn(name = "LevelId", referencedColumnName = "LevelId")
     @ManyToOne(optional = false)
-    private Level level;
+    private Level levelId;
     @JoinColumn(name = "TypeId", referencedColumnName = "TypeId")
     @ManyToOne(optional = false)
-    private Type type;
-    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "university")
-    private Collection<Branch> branchs;
+    private Type typeId;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "universityId")
+    private Collection<Branch> branchCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "universityId")
+    private Collection<Rate> rateCollection;
 
     public University() {
-
     }
 
     public University(Integer universityId) {
         this.universityId = universityId;
     }
 
-    public University(Integer universityId, String universityName, String universityCode, String website) {
+    public University(Integer universityId, String universityName, String universityCode) {
         this.universityId = universityId;
         this.universityName = universityName;
         this.universityCode = universityCode;
-        this.website = website;
     }
 
     public Integer getUniversityId() {
@@ -126,6 +118,49 @@ public class University implements Serializable, TransientHandler {
         this.avatar = avatar;
     }
 
+    @XmlTransient
+    public Collection<Introduce> getIntroduceCollection() {
+        return introduceCollection;
+    }
+
+    public void setIntroduceCollection(Collection<Introduce> introduceCollection) {
+        this.introduceCollection = introduceCollection;
+    }
+
+    public Level getLevelId() {
+        return levelId;
+    }
+
+    public void setLevelId(Level levelId) {
+        this.levelId = levelId;
+    }
+
+    public Type getTypeId() {
+        return typeId;
+    }
+
+    public void setTypeId(Type typeId) {
+        this.typeId = typeId;
+    }
+
+    @XmlTransient
+    public Collection<Branch> getBranchCollection() {
+        return branchCollection;
+    }
+
+    public void setBranchCollection(Collection<Branch> branchCollection) {
+        this.branchCollection = branchCollection;
+    }
+
+    @XmlTransient
+    public Collection<Rate> getRateCollection() {
+        return rateCollection;
+    }
+
+    public void setRateCollection(Collection<Rate> rateCollection) {
+        this.rateCollection = rateCollection;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -150,95 +185,7 @@ public class University implements Serializable, TransientHandler {
     public String toString() {
         return "model.University[ universityId=" + universityId + " ]";
     }
-
-    //===================TRANSIENT HANDLER======================
-    //-------------HANDLE TYPE----------------
-    @Column(name = "TypeId", updatable = false, insertable = false)
-    private Integer typeId;
-    @Transient
-    @XmlTransient
-    public int typeHandler = GENERATE;
-
-    public Type getType() {
-        if (typeHandler == GENERATE) {
-            type.universityHandler = TRANSIENT;
-            return type;
-        }
-        return null;
-    }
-
-    public Integer getTypeId() {
-        if (typeHandler != RAW) {
-            typeId = null;
-        }
-        return typeId;
-    }
-
-    public void setType(Type type) {
-        this.type = type;
-    }
-
-    public void setTypeId(Integer typeId) {
-        this.typeId = typeId;
-    }
-
-    //-------------HANDLE LEVEL----------------
-    @Column(name = "LevelId", updatable = false, insertable = false)
-    private Integer levelId;
-    @Transient
-    @XmlTransient
-    public int levelHandler = GENERATE;
-
-    public Level getLevel() {
-        if (levelHandler == GENERATE) {
-            level.universityHandler = TRANSIENT;
-            return level;
-        }
-        return null;
-    }
-
-    public Integer getLevelId() {
-        if (levelHandler != RAW) {
-            levelId = null;
-        }
-        return levelId;
-    }
-
-    public void setLevel(Level level) {
-        this.level = level;
-    }
-
-    public void setLevelId(Integer levelId) {
-        this.levelId = levelId;
-    }
-
-    //HANDLE BRANCHS
-    @Transient
-    @XmlTransient
-    public int branchHandler = GENERATE;
-
-    public Collection<Branch> getBranchs() {
-        if (branchHandler == GENERATE) {
-            for (Branch b : branchs) {
-                b.universityHandler = TRANSIENT;
-            }
-            return branchs;
-        }
-        return null;
-    }
-
-    public void setBranchs(Collection<Branch> branchs) {
-        this.branchs = branchs;
-    }
-
-    //update
-    public void setUpdateInfo() {
-        if (level == null) {
-            setLevel(new LevelFacadeREST().find(levelId));
-        }
-        if (type == null) {
-            setType(new TypeFacadeREST().find(typeId));
-        }
-    }
-
+    
+    //=======TRANSIENT HANDLER=========
+    
 }

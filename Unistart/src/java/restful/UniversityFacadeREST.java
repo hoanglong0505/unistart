@@ -5,7 +5,6 @@
  */
 package restful;
 
-import dao.UniversityDAO;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
@@ -34,28 +33,25 @@ public class UniversityFacadeREST extends AbstractFacade<University> {
 
     public UniversityFacadeREST() {
         super(University.class);
-        em = Persistence.createEntityManagerFactory("UnistartPU").createEntityManager();
+        em=Persistence.createEntityManagerFactory("UnistartPU").createEntityManager();
     }
 
     @POST
     @Override
-    @Path("create")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void create(University entity) {
-        entity.setUpdateInfo();
         super.create(entity);
     }
 
-    @POST
-    @Path("edit:{id}")
+    @PUT
+    @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void edit(@PathParam("id") Integer id, University entity) {
-        entity.setUpdateInfo();
         super.edit(entity);
     }
 
-    @POST
-    @Path("delete:{id}")
+    @DELETE
+    @Path("{id}")
     public void remove(@PathParam("id") Integer id) {
         super.remove(super.find(id));
     }
@@ -88,30 +84,9 @@ public class UniversityFacadeREST extends AbstractFacade<University> {
         return String.valueOf(super.count());
     }
 
-    //==== USER DEFINED=====
-    @GET
-    @Path("findByRelativeName:{name}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<University> findByRelativeName(@PathParam("name") String name) {
-        return new UniversityDAO(em).findByRelativeName(name);
-    }
-
-    @GET
-    @Path("findAllRAW")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<University> findRAWUniversity() {
-        List<University> uList = super.findAll();
-        for (University u : uList) {
-            u.branchHandler = TRANSIENT;
-//            u.levelHandler = RAW;
-//            u.typeHandler = RAW;
-        }
-        return uList;
-    }
-
     @Override
     protected EntityManager getEntityManager() {
         return em;
     }
-
+    
 }
