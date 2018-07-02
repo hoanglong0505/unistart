@@ -166,7 +166,7 @@ public class University implements Serializable, TransientHandler {
     private Type type;
     @Transient
     @XmlTransient
-    public int typeHandler = GENERATE;
+    public int typeHandler = RAW;
 
     public Type getType() {
         if (typeHandler == GENERATE) {
@@ -220,7 +220,7 @@ public class University implements Serializable, TransientHandler {
     private Level level;
     @Transient
     @XmlTransient
-    public int levelHandler = GENERATE;
+    public int levelHandler = RAW;
 
     public Level getLevel() {
         if (levelHandler == GENERATE) {
