@@ -106,7 +106,7 @@ public class RateDetail implements Serializable, TransientHandler {
 
     @Transient
     @XmlTransient
-    public int rateHandler = GENERATE;
+    public int rateHandler = RAW;
 
     public Rate getRate() {
         if (rateHandler == GENERATE) {
@@ -130,7 +130,7 @@ public class RateDetail implements Serializable, TransientHandler {
     }
 
     public void setRateId(Integer rateId) {
-        this.rateId = this.rateId;
+        this.rateId = rateId;
     }
 
     //HANDLE RATE CRITERIA
@@ -140,7 +140,7 @@ public class RateDetail implements Serializable, TransientHandler {
 
     @Transient
     @XmlTransient
-    public int rateCriteriaHandler = GENERATE;
+    public int rateCriteriaHandler = RAW;
 
     public RateCriteria getRateCriteria() {
         if (rateCriteriaHandler == GENERATE) {
@@ -164,7 +164,7 @@ public class RateDetail implements Serializable, TransientHandler {
     }
 
     public void setRateCriteriaId(Integer criteriaId) {
-        this.criteriaId = this.criteriaId;
+        this.criteriaId = criteriaId;
     }
 
 }

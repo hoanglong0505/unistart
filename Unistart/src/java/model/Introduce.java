@@ -117,7 +117,7 @@ public class Introduce implements Serializable {
     private University university;
     @Transient
     @XmlTransient
-    public int universityHandler = GENERATE;
+    public int universityHandler = RAW;
 
     public University getUniversity() {
         if (universityHandler == GENERATE) {
@@ -142,7 +142,7 @@ public class Introduce implements Serializable {
     }
 
     public void setUniversityId(Integer universityId) {
-        this.universityId = this.universityId;
+        this.universityId = universityId;
     }
     
 }

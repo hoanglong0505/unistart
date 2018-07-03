@@ -141,7 +141,7 @@ public class Branch implements Serializable {
     private University university;
     @Transient
     @XmlTransient
-    public int universityHandler = GENERATE;
+    public int universityHandler = RAW;
 
     public University getUniversity() {
         if (universityHandler == GENERATE) {
@@ -174,7 +174,7 @@ public class Branch implements Serializable {
     private Location location;
     @Transient
     @XmlTransient
-    public int locationHandler = GENERATE;
+    public int locationHandler = RAW;
 
     public Location getLocation() {
         if (locationHandler == GENERATE) {

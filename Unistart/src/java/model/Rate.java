@@ -176,7 +176,7 @@ public class Rate implements Serializable, TransientHandler {
     private University university;
     @Transient
     @XmlTransient
-    public int universityHandler = GENERATE;
+    public int universityHandler = RAW;
 
     public University getUniversity() {
         if (universityHandler == GENERATE) {
@@ -200,7 +200,7 @@ public class Rate implements Serializable, TransientHandler {
     }
 
     public void setUniversityId(Integer universityId) {
-        this.universityId = this.universityId;
+        this.universityId = universityId;
     }
 
     //HANDLE RATE DETAILS
@@ -208,7 +208,7 @@ public class Rate implements Serializable, TransientHandler {
     private Collection<RateDetail> rateDetails;
     @Transient
     @XmlTransient
-    public int rateDetailHandler = GENERATE;
+    public int rateDetailHandler = RAW;
 
     public Collection<RateDetail> getRateDetails() {
         if (rateDetailHandler == GENERATE) {
@@ -231,7 +231,7 @@ public class Rate implements Serializable, TransientHandler {
     private Users user;
     @Transient
     @XmlTransient
-    public int userHandler = GENERATE;
+    public int userHandler = RAW;
 
     public Users getUser() {
         if (userHandler == GENERATE) {
@@ -255,6 +255,6 @@ public class Rate implements Serializable, TransientHandler {
     }
 
     public void setUserId(Integer userId) {
-        this.userId = this.userId;
+        this.userId = userId;
     }
 }

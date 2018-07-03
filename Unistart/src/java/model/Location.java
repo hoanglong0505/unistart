@@ -106,7 +106,7 @@ public class Location implements Serializable, TransientHandler {
     private Collection<Branch> branchs;
     @Transient
     @XmlTransient
-    public int branchHandler = GENERATE;
+    public int branchHandler = RAW;
 
     public Collection<Branch> getBranchs() {
         if (branchHandler == GENERATE) {
@@ -128,7 +128,7 @@ public class Location implements Serializable, TransientHandler {
     private SubLocation subLocation;
     @Transient
     @XmlTransient
-    public int subLocationHandler = GENERATE;
+    public int subLocationHandler = RAW;
 
     public SubLocation getSubLocation() {
         if (subLocationHandler == GENERATE) {
@@ -152,7 +152,7 @@ public class Location implements Serializable, TransientHandler {
     }
 
     public void setSubLocationId(Integer subLocationId) {
-        this.subLocationId = this.subLocationId;
+        this.subLocationId = subLocationId;
     }
 
 }

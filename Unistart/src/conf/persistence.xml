@@ -14,6 +14,7 @@
     <class>model.RateDetail</class>
     <class>model.Type</class>
     <class>model.Branch</class>
+    <class>model.UniversityCareer</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:sqlserver://localhost:1433;databaseName=unistart"/>

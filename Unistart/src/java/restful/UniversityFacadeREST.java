@@ -5,6 +5,7 @@
  */
 package restful;
 
+import dao.UniversityDAO;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
@@ -84,6 +85,14 @@ public class UniversityFacadeREST extends AbstractFacade<University> {
         return String.valueOf(super.count());
     }
 
+    //CUSTOM
+    @GET
+    @Path("findAllWithBranchs")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<University> findAllWithBranchs() {
+        return new UniversityDAO().findAllWithBranchs(em);
+    }
+    
     @Override
     protected EntityManager getEntityManager() {
         return em;

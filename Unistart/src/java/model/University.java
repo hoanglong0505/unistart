@@ -43,7 +43,7 @@ import restful.TypeFacadeREST;
     , @NamedQuery(name = "University.findByWebsite", query = "SELECT u FROM University u WHERE u.website = :website")
     , @NamedQuery(name = "University.findByAvatar", query = "SELECT u FROM University u WHERE u.avatar = :avatar")})
 public class University implements Serializable, TransientHandler {
-
+    
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -144,7 +144,7 @@ public class University implements Serializable, TransientHandler {
     private Collection<Introduce> introduces;
     @Transient
     @XmlTransient
-    public int introduceHandler = GENERATE;
+    public int introduceHandler = RAW;
 
     public Collection<Introduce> getIntroduces() {
         if (introduceHandler == GENERATE) {
@@ -166,7 +166,7 @@ public class University implements Serializable, TransientHandler {
     private Type type;
     @Transient
     @XmlTransient
-    public int typeHandler = GENERATE;
+    public int typeHandler = RAW;
 
     public Type getType() {
         if (typeHandler == GENERATE) {
@@ -180,17 +180,18 @@ public class University implements Serializable, TransientHandler {
         this.type = type;
     }
     // Handle TypeId
-  @Column(name = "TypeId", updatable = false, insertable = false)
+    @Column(name = "TypeId", updatable = false, insertable = false)
     private Integer typeId;
+
     public Integer getTypeId() {
-        if ( typeHandler!= RAW) {
+        if (typeHandler != RAW) {
             typeId = null;
         }
         return typeId;
     }
 
     public void setTypeId(Integer typeId) {
-        this.typeId = this.typeId;
+        this.typeId = typeId;
     }
 
     //HANDLE BRANCHS
@@ -198,7 +199,7 @@ public class University implements Serializable, TransientHandler {
     private Collection<Branch> branchs;
     @Transient
     @XmlTransient
-    public int branchHandler = GENERATE;
+    public int branchHandler = RAW;
 
     public Collection<Branch> getBranchs() {
         if (branchHandler == GENERATE) {
@@ -220,7 +221,7 @@ public class University implements Serializable, TransientHandler {
     private Level level;
     @Transient
     @XmlTransient
-    public int levelHandler = GENERATE;
+    public int levelHandler = RAW;
 
     public Level getLevel() {
         if (levelHandler == GENERATE) {
@@ -234,17 +235,18 @@ public class University implements Serializable, TransientHandler {
         this.level = level;
     }
     // Handle LevelId
-  @Column(name = "LevelId", updatable = false, insertable = false)
+    @Column(name = "LevelId", updatable = false, insertable = false)
     private Integer levelId;
+
     public Integer getLevelId() {
-        if ( levelHandler!= RAW) {
+        if (levelHandler != RAW) {
             levelId = null;
         }
         return levelId;
     }
 
     public void setLevelId(Integer levelId) {
-        this.levelId = this.levelId;
+        this.levelId = levelId;
     }
 
     //Handle Rate
@@ -253,7 +255,7 @@ public class University implements Serializable, TransientHandler {
 
     @Transient
     @XmlTransient
-    public int rateHandler = GENERATE;
+    public int rateHandler = RAW;
 
     public Collection<Rate> getRates() {
         if (rateHandler == GENERATE) {
@@ -268,5 +270,27 @@ public class University implements Serializable, TransientHandler {
     public void setRates(Collection<Rate> rates) {
         this.rates = rates;
     }
+
+    //HANDLE UNIVERSITY CAREERS
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "universityId")
+//    private Collection<UniversityCareer> universityCareerCollection;
+//
+//    @Transient
+//    @XmlTransient
+//    public int universityCareerHandler = RAW;
+//
+//    public Collection<UniversityCareer> getUniversityCareerCollection() {
+//        if (universityCareerHandler == GENERATE) {
+//            for (UniversityCareer uc : universityCareerCollection) {
+//                uc.universityHandler = TRANSIENT;
+//            }
+//            return universityCareerCollection;
+//        }
+//        return null;
+//    }
+//
+//    public void setUniversityCareerCollection(Collection<UniversityCareer> universityCareerCollection) {
+//        this.universityCareerCollection = universityCareerCollection;
+//    }
 
 }

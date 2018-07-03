@@ -102,7 +102,7 @@ public class Level implements Serializable, TransientHandler {
     private Collection<University> universities;
     @Transient
     @XmlTransient
-    public int universityHandler = GENERATE;
+    public int universityHandler = RAW;
 
     public Collection<University> getUniversities() {
         if (universityHandler == GENERATE) {

@@ -103,7 +103,7 @@ public class SubLocation implements Serializable, TransientHandler {
 
     @Transient
     @XmlTransient
-    public int locationHandler = GENERATE;
+    public int locationHandler = RAW;
 
     public Collection<Location> getLocations() {
         if (locationHandler == GENERATE) {

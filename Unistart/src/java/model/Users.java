@@ -18,6 +18,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import model.utils.TransientHandler;
 import static model.utils.TransientHandler.GENERATE;
 import static model.utils.TransientHandler.TRANSIENT;
 
@@ -34,7 +35,7 @@ import static model.utils.TransientHandler.TRANSIENT;
     , @NamedQuery(name = "Users.findByEmail", query = "SELECT u FROM Users u WHERE u.email = :email")
     , @NamedQuery(name = "Users.findByName", query = "SELECT u FROM Users u WHERE u.name = :name")
     , @NamedQuery(name = "Users.findByAvatar", query = "SELECT u FROM Users u WHERE u.avatar = :avatar")})
-public class Users implements Serializable {
+public class Users implements Serializable, TransientHandler {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -128,7 +129,7 @@ public class Users implements Serializable {
     
     @Transient
     @XmlTransient
-    public int rateHandler = GENERATE;
+    public int rateHandler = RAW;
 
     public Collection<Rate> getRates() {
         if (rateHandler == GENERATE) {

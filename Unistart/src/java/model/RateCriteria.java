@@ -115,7 +115,7 @@ public class RateCriteria implements Serializable, TransientHandler {
     //HANDLE RATE DETAILS
     @Transient
     @XmlTransient
-    public int rateDetailHandler = GENERATE;
+    public int rateDetailHandler = RAW;
 
     public Collection<RateDetail> getRateDetails() {
         if (rateDetailHandler == GENERATE) {
