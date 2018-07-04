@@ -3,12 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Users/Admin/Documents/GitHub/unistart/Unistart2/src/java/model/RateDetailPK.java</file>
+            <file>file:/C:/Users/Admin/Documents/GitHub/unistart/Unistart2/src/java/model/EntranceInfoPK.java</file>
+            <file>file:/C:/Users/Admin/Documents/GitHub/unistart/Unistart2/src/java/model/EntranceInfo.java</file>
+            <file>file:/C:/Users/Admin/Documents/GitHub/unistart/Unistart2/src/java/restful/FieldFacadeREST.java</file>
             <file>file:/C:/Users/Admin/Documents/GitHub/unistart/Unistart2/web/field.html</file>
             <file>file:/C:/Users/Admin/Documents/GitHub/unistart/Unistart2/web/Field.js</file>
-            <file>file:/C:/Users/Admin/Documents/GitHub/unistart/Unistart2/src/java/model/service/FieldFacadeREST.java</file>
-            <file>file:/C:/Users/Admin/Documents/GitHub/unistart/Unistart2/src/java/model/service/ArticleFacadeREST.java</file>
-            <file>file:/C:/Users/Admin/Documents/GitHub/unistart/Unistart2/src/java/model/service/FieldTypeFacadeREST.java</file>
-            <file>file:/C:/Users/Admin/Documents/GitHub/unistart/Unistart2/src/java/model/service/RateFacadeREST.java</file>
+            <file>file:/C:/Users/Admin/Documents/GitHub/unistart/Unistart2/src/java/model/RateDetail.java</file>
+            <file>file:/C:/Users/Admin/Documents/GitHub/unistart/Unistart2/src/java/restful/SchoolFacadeREST.java</file>
         </group>
     </open-files>
 </project-private>
