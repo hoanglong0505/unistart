@@ -16,11 +16,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Admin
+ * @author TNT
  */
 @Entity
 @Table(name = "Report")
@@ -35,7 +37,9 @@ public class Report implements Serializable {
     @EmbeddedId
     protected ReportPK reportPK;
     @Basic(optional = false)
+    @NotNull
     @Lob
+    @Size(min = 1, max = 2147483647)
     @Column(name = "RpContent")
     private String rpContent;
     @JoinColumn(name = "RateId", referencedColumnName = "RateId", insertable = false, updatable = false)

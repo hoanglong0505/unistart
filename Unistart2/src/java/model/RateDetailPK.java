@@ -9,18 +9,21 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.validation.constraints.NotNull;
 
 /**
  *
- * @author Admin
+ * @author TNT
  */
 @Embeddable
 public class RateDetailPK implements Serializable {
 
     @Basic(optional = false)
+    @NotNull
     @Column(name = "RateId")
     private int rateId;
     @Basic(optional = false)
+    @NotNull
     @Column(name = "CriteriaId")
     private int criteriaId;
 

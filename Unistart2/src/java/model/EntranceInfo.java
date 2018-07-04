@@ -14,11 +14,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Admin
+ * @author TNT
  */
 @Entity
 @Table(name = "EntranceInfo")
@@ -27,8 +28,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "EntranceInfo.findAll", query = "SELECT e FROM EntranceInfo e")
     , @NamedQuery(name = "EntranceInfo.findBySchoolId", query = "SELECT e FROM EntranceInfo e WHERE e.entranceInfoPK.schoolId = :schoolId")
     , @NamedQuery(name = "EntranceInfo.findByFieldId", query = "SELECT e FROM EntranceInfo e WHERE e.entranceInfoPK.fieldId = :fieldId")
-    , @NamedQuery(name = "EntranceInfo.findByLevelId", query = "SELECT e FROM EntranceInfo e WHERE e.entranceInfoPK.levelId = :levelId")
     , @NamedQuery(name = "EntranceInfo.findByYear", query = "SELECT e FROM EntranceInfo e WHERE e.entranceInfoPK.year = :year")
+    , @NamedQuery(name = "EntranceInfo.findByFieldSubCode", query = "SELECT e FROM EntranceInfo e WHERE e.fieldSubCode = :fieldSubCode")
     , @NamedQuery(name = "EntranceInfo.findByNormalEntranceAmount", query = "SELECT e FROM EntranceInfo e WHERE e.normalEntranceAmount = :normalEntranceAmount")
     , @NamedQuery(name = "EntranceInfo.findByOtherEntranceAmount", query = "SELECT e FROM EntranceInfo e WHERE e.otherEntranceAmount = :otherEntranceAmount")})
 public class EntranceInfo implements Serializable {
@@ -36,19 +37,19 @@ public class EntranceInfo implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected EntranceInfoPK entranceInfoPK;
+    @Size(max = 10)
+    @Column(name = "FieldSubCode")
+    private String fieldSubCode;
     @Column(name = "NormalEntranceAmount")
     private Integer normalEntranceAmount;
     @Column(name = "OtherEntranceAmount")
     private Integer otherEntranceAmount;
-    @JoinColumn(name = "SchoolId", referencedColumnName = "SchoolId", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
-    private School school;
     @JoinColumn(name = "FieldId", referencedColumnName = "FieldId", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Field field;
-    @JoinColumn(name = "LevelId", referencedColumnName = "LevelId", insertable = false, updatable = false)
+    @JoinColumn(name = "SchoolId", referencedColumnName = "SchoolId", insertable = false, updatable = false)
     @ManyToOne(optional = false)
-    private Level level;
+    private School school;
     @JoinColumn(name = "Main_sjCode1", referencedColumnName = "SubjectCode")
     @ManyToOne
     private Subject mainsjCode1;
@@ -81,8 +82,8 @@ public class EntranceInfo implements Serializable {
         this.entranceInfoPK = entranceInfoPK;
     }
 
-    public EntranceInfo(int schoolId, int fieldId, int levelId, int year) {
-        this.entranceInfoPK = new EntranceInfoPK(schoolId, fieldId, levelId, year);
+    public EntranceInfo(int schoolId, int fieldId, int year) {
+        this.entranceInfoPK = new EntranceInfoPK(schoolId, fieldId, year);
     }
 
     public EntranceInfoPK getEntranceInfoPK() {
@@ -91,6 +92,14 @@ public class EntranceInfo implements Serializable {
 
     public void setEntranceInfoPK(EntranceInfoPK entranceInfoPK) {
         this.entranceInfoPK = entranceInfoPK;
+    }
+
+    public String getFieldSubCode() {
+        return fieldSubCode;
+    }
+
+    public void setFieldSubCode(String fieldSubCode) {
+        this.fieldSubCode = fieldSubCode;
     }
 
     public Integer getNormalEntranceAmount() {
@@ -109,14 +118,6 @@ public class EntranceInfo implements Serializable {
         this.otherEntranceAmount = otherEntranceAmount;
     }
 
-    public School getSchool() {
-        return school;
-    }
-
-    public void setSchool(School school) {
-        this.school = school;
-    }
-
     public Field getField() {
         return field;
     }
@@ -125,12 +126,12 @@ public class EntranceInfo implements Serializable {
         this.field = field;
     }
 
-    public Level getLevel() {
-        return level;
+    public School getSchool() {
+        return school;
     }
 
-    public void setLevel(Level level) {
-        this.level = level;
+    public void setSchool(School school) {
+        this.school = school;
     }
 
     public Subject getMainsjCode1() {

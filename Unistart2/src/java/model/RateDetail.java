@@ -18,7 +18,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Admin
+ * @author TNT
  */
 @Entity
 @Table(name = "RateDetail")

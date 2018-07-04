@@ -18,12 +18,14 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Admin
+ * @author TNT
  */
 @Entity
 @Table(name = "School")
@@ -42,19 +44,29 @@ public class School implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
+    @NotNull
     @Column(name = "SchoolId")
     private Integer schoolId;
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 100)
     @Column(name = "SchoolName")
     private String schoolName;
+    @Size(max = 50)
     @Column(name = "SchoolCode")
     private String schoolCode;
+    @Size(max = 500)
     @Column(name = "Website")
     private String website;
+    // @Pattern(regexp="^\\(?(\\d{3})\\)?[- ]?(\\d{3})[- ]?(\\d{4})$", message="Invalid phone/fax format, should be as xxx-xxx-xxxx")//if the field contains phone or fax number consider using this annotation to enforce field validation
+    @Size(max = 50)
     @Column(name = "Phone")
     private String phone;
+    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
+    @Size(max = 100)
     @Column(name = "Email")
     private String email;
+    @Size(max = 500)
     @Column(name = "Avatar")
     private String avatar;
     @OneToMany(mappedBy = "schoolId")

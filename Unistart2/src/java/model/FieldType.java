@@ -16,12 +16,14 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Admin
+ * @author TNT
  */
 @Entity
 @Table(name = "FieldType")
@@ -35,9 +37,12 @@ public class FieldType implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
+    @NotNull
     @Column(name = "FieldTypeId")
     private Integer fieldTypeId;
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
     @Column(name = "TypeName")
     private String typeName;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "fieldTypeId")

@@ -17,12 +17,14 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Admin
+ * @author TNT
  */
 @Entity
 @Table(name = "SubjectCombination")
@@ -35,6 +37,8 @@ public class SubjectCombination implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 5)
     @Column(name = "SjCombiCode")
     private String sjCombiCode;
     @JoinColumn(name = "SjCode1", referencedColumnName = "SubjectCode")

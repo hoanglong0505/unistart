@@ -9,18 +9,21 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.validation.constraints.NotNull;
 
 /**
  *
- * @author Admin
+ * @author TNT
  */
 @Embeddable
 public class BranchPK implements Serializable {
 
     @Basic(optional = false)
+    @NotNull
     @Column(name = "SchoolId")
     private int schoolId;
     @Basic(optional = false)
+    @NotNull
     @Column(name = "BranchNo")
     private int branchNo;
 

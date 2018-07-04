@@ -19,6 +19,10 @@
     <class>model.Type</class>
     <class>model.Location</class>
     <class>model.RateDetail</class>
+    <class>model.Character</class>
+    <class>model.Answer</class>
+    <class>model.Genitite</class>
+    <class>model.Question</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:sqlserver://localhost:1433;databaseName=unistart2"/>
