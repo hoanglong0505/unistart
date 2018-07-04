@@ -2,15 +2,14 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-<<<<<<< HEAD
-        <group/>
-=======
         <group>
-            <file>file:/C:/Users/Admin/Documents/GitHub/unistart/Unistart/src/java/model/Type.java</file>
-            <file>file:/C:/Users/Admin/Documents/GitHub/unistart/Unistart/src/java/model/Branch.java</file>
             <file>file:/C:/Users/Admin/Documents/GitHub/unistart/Unistart/src/java/model/University.java</file>
+            <file>file:/C:/Users/Admin/Documents/GitHub/unistart/Unistart/src/java/model/Type.java</file>
             <file>file:/C:/Users/Admin/Documents/GitHub/unistart/Unistart/src/java/model/Level.java</file>
+            <file>file:/C:/Users/Admin/Documents/GitHub/unistart/Unistart/web/Location.js</file>
+            <file>file:/C:/Users/Admin/Documents/GitHub/unistart/Unistart/src/java/model/Location.java</file>
+            <file>file:/C:/Users/Admin/Documents/GitHub/unistart/Unistart/src/java/model/Branch.java</file>
+            <file>file:/C:/Users/Admin/Documents/GitHub/unistart/Unistart/web/University.js</file>
         </group>
->>>>>>> 7946b50451b81a17407040e255d60056ac615ff4
     </open-files>
 </project-private>
