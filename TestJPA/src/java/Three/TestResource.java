@@ -40,28 +40,30 @@ public class TestResource {
 
     /**
      * Retrieves representation of an instance of Three.TestResource
+     *
      * @return an instance of java.lang.String
      */
     @GET
     @Produces(MediaType.TEXT_PLAIN)
-     @Path("/test")
+    @Path("/test")
     public String getText() {
-      ThreeBLO blo= new ThreeBLO();
-      JpaJsonConverter converter=new JpaJsonConverter();
-       return converter.convertToDatabaseColumn(blo.getall());
+        ThreeBLO blo = new ThreeBLO();
+        JpaJsonConverter converter = new JpaJsonConverter();
+        return converter.convertToDatabaseColumn(blo.getall());
     }
-@POST
-@Produces(MediaType.TEXT_PLAIN)
-     @Path("/test")
-public String SetText(String one) throws IOException {
-    System.out.println(one);
-    ObjectMapper mapper = new ObjectMapper();
-    One o = mapper.readValue(one, One.class);
-      JpaJsonConverter converter=new JpaJsonConverter(); 
-        String s=converter.convertToDatabaseColumn(o);
-    
-       return s;
+
+    @POST
+    @Produces(MediaType.TEXT_PLAIN)
+    @Path("/test")
+    public String SetText(String one) throws IOException {
+        System.out.println(one);
+        ObjectMapper mapper = new ObjectMapper();
+        One o = mapper.readValue(one, One.class);
+        JpaJsonConverter converter = new JpaJsonConverter();
+        String s = converter.convertToDatabaseColumn(o);
+
+        return s;
     }
-        
- 
+
 }
+
