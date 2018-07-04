@@ -19,12 +19,14 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Admin
+ * @author TNT
  */
 @Entity
 @Table(name = "Rate")
@@ -42,18 +44,24 @@ public class Rate implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
+    @NotNull
     @Column(name = "RateId")
     private Integer rateId;
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 255)
     @Column(name = "Title")
     private String title;
     @Lob
+    @Size(max = 2147483647)
     @Column(name = "Pros")
     private String pros;
     @Lob
+    @Size(max = 2147483647)
     @Column(name = "Cons")
     private String cons;
     @Lob
+    @Size(max = 2147483647)
     @Column(name = "Experience")
     private String experience;
     @Column(name = "Encourage")

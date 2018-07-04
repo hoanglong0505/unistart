@@ -15,11 +15,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Admin
+ * @author TNT
  */
 @Entity
 @Table(name = "Branch")
@@ -38,12 +40,18 @@ public class Branch implements Serializable {
     @EmbeddedId
     protected BranchPK branchPK;
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 100)
     @Column(name = "BranchName")
     private String branchName;
+    @Size(max = 200)
     @Column(name = "Address")
     private String address;
+    // @Pattern(regexp="^\\(?(\\d{3})\\)?[- ]?(\\d{3})[- ]?(\\d{4})$", message="Invalid phone/fax format, should be as xxx-xxx-xxxx")//if the field contains phone or fax number consider using this annotation to enforce field validation
+    @Size(max = 20)
     @Column(name = "Phone")
     private String phone;
+    @Size(max = 500)
     @Column(name = "Website")
     private String website;
     @JoinColumn(name = "LocationId", referencedColumnName = "LocationId")

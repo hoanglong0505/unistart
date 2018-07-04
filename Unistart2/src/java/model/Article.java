@@ -15,11 +15,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Admin
+ * @author TNT
  */
 @Entity
 @Table(name = "Article")
@@ -34,11 +36,14 @@ public class Article implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
+    @NotNull
     @Column(name = "ArticleId")
     private Integer articleId;
+    @Size(max = 500)
     @Column(name = "Link")
     private String link;
     @Basic(optional = false)
+    @NotNull
     @Column(name = "Status")
     private boolean status;
     @JoinColumn(name = "SchoolId", referencedColumnName = "SchoolId")

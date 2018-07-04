@@ -9,34 +9,34 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.validation.constraints.NotNull;
 
 /**
  *
- * @author Admin
+ * @author TNT
  */
 @Embeddable
 public class EntranceInfoPK implements Serializable {
 
     @Basic(optional = false)
+    @NotNull
     @Column(name = "SchoolId")
     private int schoolId;
     @Basic(optional = false)
+    @NotNull
     @Column(name = "FieldId")
     private int fieldId;
     @Basic(optional = false)
-    @Column(name = "LevelId")
-    private int levelId;
-    @Basic(optional = false)
+    @NotNull
     @Column(name = "Year")
     private int year;
 
     public EntranceInfoPK() {
     }
 
-    public EntranceInfoPK(int schoolId, int fieldId, int levelId, int year) {
+    public EntranceInfoPK(int schoolId, int fieldId, int year) {
         this.schoolId = schoolId;
         this.fieldId = fieldId;
-        this.levelId = levelId;
         this.year = year;
     }
 
@@ -56,14 +56,6 @@ public class EntranceInfoPK implements Serializable {
         this.fieldId = fieldId;
     }
 
-    public int getLevelId() {
-        return levelId;
-    }
-
-    public void setLevelId(int levelId) {
-        this.levelId = levelId;
-    }
-
     public int getYear() {
         return year;
     }
@@ -77,7 +69,6 @@ public class EntranceInfoPK implements Serializable {
         int hash = 0;
         hash += (int) schoolId;
         hash += (int) fieldId;
-        hash += (int) levelId;
         hash += (int) year;
         return hash;
     }
@@ -95,9 +86,6 @@ public class EntranceInfoPK implements Serializable {
         if (this.fieldId != other.fieldId) {
             return false;
         }
-        if (this.levelId != other.levelId) {
-            return false;
-        }
         if (this.year != other.year) {
             return false;
         }
@@ -106,7 +94,7 @@ public class EntranceInfoPK implements Serializable {
 
     @Override
     public String toString() {
-        return "model.EntranceInfoPK[ schoolId=" + schoolId + ", fieldId=" + fieldId + ", levelId=" + levelId + ", year=" + year + " ]";
+        return "model.EntranceInfoPK[ schoolId=" + schoolId + ", fieldId=" + fieldId + ", year=" + year + " ]";
     }
     
 }
